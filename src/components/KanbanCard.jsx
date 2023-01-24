@@ -5,6 +5,7 @@ import {
   MINUTE, HOUR, DAY, UPDATE_INTERVAL,
 } from './App';
 
+
 const kanbanCardStylesTime = css`
   text-align: right;
   font-size: 0.8rem;
