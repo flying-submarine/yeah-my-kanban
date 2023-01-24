@@ -5,10 +5,12 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run lint-staged",
     "start": "vite dev --open",
     "build": "vite build",
-    "lint":"eslint './src/**/*.{js,jsx}'"
+    "lint": "eslint './src/**/*.{js,jsx}'",
+    "prepare": "husky install",
+    "lint-staged": "echo 'Pre-commit!'"
   },
   "keywords": [],
   "author": "",
@@ -24,7 +26,8 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "vite": "^4.0.4"
+    "vite": "^4.0.4",
+    "husky": "^8.0.0"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
