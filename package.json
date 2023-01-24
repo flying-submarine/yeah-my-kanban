@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "vite dev --open",
-    "build": "vite build"
+    "build": "vite build",
+    "lint":"eslint './src/**/*.{js,jsx}'"
   },
   "keywords": [],
   "author": "",

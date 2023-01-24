@@ -33,22 +33,22 @@ export default function KanbanNewCard({ onSubmit }) {
     inputElem.current.focus();
   }, []);
   const handleKeyDown = (evt) => {
-    if (evt.key === "Enter") {
-      const newCard = {title,status: new Date().toDateString()}
+    if (evt.key === 'Enter') {
+      const newCard = { title, status: new Date().toDateString() };
       onSubmit(newCard);
     }
   };
   return (
     <li css={kanbanCardStyles}>
       <h3>添加新卡片</h3>
-      <div css={KanbanNewCardStyleInput}
-      >
+      <div css={KanbanNewCardStyleInput}>
         <input
           type="text"
           value={title}
           ref={inputElem}
           onChange={handleChange}
-          onKeyDown={handleKeyDown} />
+          onKeyDown={handleKeyDown}
+        />
       </div>
     </li>
   );
