@@ -41,6 +41,8 @@ function App() {
     [COLUMN_KEY_ONGOING]:setOngoingList,
     [COLUMN_KEY_DONE]:setDoneList,
   }
+
+  useEffect
   const handleToggleAdmin = (evt) => { 
     setIsAdmin(!isAdmin);
   };
