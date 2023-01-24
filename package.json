@@ -1,0 +1,25 @@
+{
+  "name": "yeah-my-kanban",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "vite dev --open",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@emotion/babel-plugin": "^11.10.5",
+    "@vitejs/plugin-react": "^3.0.1",
+    "vite": "^4.0.4"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
