@@ -10,7 +10,10 @@
     "build": "vite build",
     "lint": "eslint './src/**/*.{js,jsx}'",
     "prepare": "husky install",
-    "lint-staged": "echo 'Pre-commit!'"
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged":{
+    "*.{js,jsx}":"eslint"
   },
   "keywords": [],
   "author": "",
