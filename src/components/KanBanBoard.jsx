@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import React, { useState } from 'react';
 import KanBanColumn from './KanBanColumn';
 
-
 const kanbanBoardStyles = css`
   flex: 10;
   display: flex;
@@ -10,7 +9,7 @@ const kanbanBoardStyles = css`
   gap: 1rem;
   margin: 0 1rem 1rem;
 `;
-const COLUMN_BG_COlORS = {
+const columnBgColor = {
   loading: '#E3E3E3',
   todo: '#C9AF97',
   ongoing: '#FFE799',
@@ -43,23 +42,24 @@ export default function KanBanBoard({
     <main css={kanbanBoardStyles}>
       { isLoading
         ? (
-          <KanBanColumn bgColor={COLUMN_BG_COlORS.loading} title="处理中" />
+          <KanBanColumn bgColor={columnBgColor.loading} title="处理中" />
         )
         : (
           <KanBanColumn
-            bgColor={COLUMN_BG_COlORS.todo}
+            bgColor={columnBgColor.todo}
             title="待处理"
             cardList={todoList}
             setIsDragSource={(isSrc) => setDragSource(isSrc ? COLUMN_KEY_TODO : null)}
             setIsDragTarget={(isTgt) => setDragTarget(isTgt ? COLUMN_KEY_TODO : null)}
             handleDrop={handleDrop}
+            // eslint-disable-next-line react/jsx-no-bind
             onAdd={onAdd.bind(null, COLUMN_KEY_TODO)}
             canAddNew
             setDraggedItem={setDraggedItem}
           />
         )}
       <KanBanColumn
-        bgColor={COLUMN_BG_COlORS.ongoing}
+        bgColor={columnBgColor.ongoing}
         title="进行中"
         setIsDragSource={(isSrc) => setDragSource(isSrc ? COLUMN_KEY_ONGOING : null)}
         setIsDragTarget={(isTgt) => setDragTarget(isTgt ? COLUMN_KEY_ONGOING : null)}
@@ -68,13 +68,14 @@ export default function KanBanBoard({
         setDraggedItem={setDraggedItem}
       />
       <KanBanColumn
-        bgColor={COLUMN_BG_COlORS.done}
+        bgColor={columnBgColor.done}
         title="已完成"
         setIsDragSource={(isSrc) => setDragSource(isSrc ? COLUMN_KEY_DONE : null)}
         setIsDragTarget={(isTgt) => setDragTarget(isTgt ? COLUMN_KEY_DONE : null)}
         handleDrop={handleDrop}
         cardList={doneList}
         setDraggedItem={setDraggedItem}
+        // eslint-disable-next-line react/jsx-no-bind
         onRemove={onRemove.bind(null, COLUMN_KEY_DONE)}
       />
     </main>

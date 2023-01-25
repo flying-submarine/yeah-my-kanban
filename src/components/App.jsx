@@ -11,11 +11,6 @@ import './App.css';
 
 const DATA_STORE_KEY = 'kanban-data-store';
 
-export const MINUTE = 60 * 1000;
-export const HOUR = 60 * MINUTE;
-export const DAY = 24 * HOUR;
-export const UPDATE_INTERVAL = MINUTE;
-
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -40,7 +35,7 @@ function App() {
     [COLUMN_KEY_DONE]: setDoneList,
   };
 
-  const handleToggleAdmin = (evt) => {
+  const handleToggleAdmin = () => {
     setIsAdmin(!isAdmin);
   };
   useEffect(() => {
@@ -70,6 +65,7 @@ function App() {
   };
 
   const onRemove = (cloumn, cardToRemove) => {
+    // eslint-disable-next-line max-len
     updates[cloumn]((currentStat) => currentStat.filter((item) => item.title !== cardToRemove.title));
   };
 
@@ -78,8 +74,8 @@ function App() {
       <header className="App-header">
         <h1>
           我的看板
-          <button onClick={handleSaveAll}>保存所有卡片</button>
-          <label>
+          <button type="button" onClick={handleSaveAll}>保存所有卡片</button>
+          <label htmlFor="admin">
             <input type="checkbox" value={isAdmin} onChange={handleToggleAdmin} />
             管理员模式
           </label>

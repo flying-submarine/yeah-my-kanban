@@ -7,8 +7,8 @@ export default function KanBanColumn({
   children,
   bgColor,
   title,
-  setIsDragSource = () => { },
-  setIsDragTarget = () => { },
+  setIsDragSource = () => {},
+  setIsDragTarget = () => {},
   handleDrop,
   cardList = [],
   setDraggedItem,
@@ -25,6 +25,36 @@ export default function KanBanColumn({
     onAdd && onAdd(newCard);
     setShowAdd(false);
   };
+  function KanBanColumnStyle() {
+    return css`
+          flex: 1 1;
+          display: flex;
+          flex-direction: column;
+          border: 1px solid gray;
+          border-radius: 1rem;
+          background-color: ${bgColor};
+          & > ul {
+            flex: 0px;
+            margin: 1rem;
+            padding: 0;
+            overflow: auto;
+          }
+          & > h2 {
+            margin: 0.6rem 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid gray;
+            & > button { 
+              float: right; 
+              margin-top: 0.2rem;
+              padding: 0.2rem 0.5rem; 
+              border: 0; 
+              border-radius: 1rem; 
+              height: 1.8rem; 
+              line-height: 1rem; 
+              font-size: 1rem;} 
+          }
+        `;
+  }
   return (
     <section
       onDragStart={() => setIsDragSource(true)}
@@ -53,7 +83,7 @@ export default function KanBanColumn({
         {title}
         {canAddNew
         && (
-        <button onClick={handleAdd} disabled={showAdd}>
+        <button type="button" onClick={handleAdd} disabled={showAdd}>
           ⊕ 添加新卡片
         </button>
         )}
@@ -64,6 +94,7 @@ export default function KanBanColumn({
         {cardList.map((props) => (
           <KanbanCard
             onDragStart={() => setDraggedItem && setDraggedItem(props)}
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
             onRemove={onRemove}
             key={props.title}
@@ -73,34 +104,4 @@ export default function KanBanColumn({
 
     </section>
   );
-}
-function KanBanColumnStyle(bgColor) {
-  return css`
-        flex: 1 1;
-        display: flex;
-        flex-direction: column;
-        border: 1px solid gray;
-        border-radius: 1rem;
-        background-color: ${bgColor};
-        & > ul {
-          flex: 0px;
-          margin: 1rem;
-          padding: 0;
-          overflow: auto;
-        }
-        & > h2 {
-          margin: 0.6rem 1rem;
-          padding-bottom: 0.6rem;
-          border-bottom: 1px solid gray;
-          & > button { 
-            float: right; 
-            margin-top: 0.2rem;
-            padding: 0.2rem 0.5rem; 
-            border: 0; 
-            border-radius: 1rem; 
-            height: 1.8rem; 
-            line-height: 1rem; 
-            font-size: 1rem;} 
-        }
-      `;
 }
