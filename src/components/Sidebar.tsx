@@ -44,6 +44,7 @@ export const Sidebar = (props: SidebarProps) => {
     const handleSelectChange = ({
         target,
     }: React.ChangeEvent<HTMLSelectElement>) => {
+        debugger
         setNewLocale(target.value);
         onSwitchLocale(target.value);
     };
@@ -301,6 +302,8 @@ export const Sidebar = (props: SidebarProps) => {
                 <select
                     className="text-gray-300/50 text-center bg-transparent w-full outline-none m-1"
                     onChange={handleSelectChange}
+                    // defaultValue={"en-US"}
+                    // value={"en-US"}
                     value={newLocale ?? currentLocale}
                 >
                     <option disabled>Choose Language</option>

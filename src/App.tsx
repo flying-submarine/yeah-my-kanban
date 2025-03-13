@@ -39,6 +39,7 @@ const App = () => {
         acc[key] = value.label;
         return acc;
     }, {} as Record<string, string>);
+    console.log("resources",locales, resources);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
