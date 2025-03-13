@@ -29,7 +29,7 @@ export const Header = (props: HeaderProps) => {
                 // onClick={onToggleSidebar}
             >
                 {/* <img src={menuIcon} className="size-4" alt="" /> */}
-                <h1 className="font-semibold text-lg">{title}</h1>
+                <h1 className="font-semibold text-lg">{"DDA"}</h1>
             </button>
             <button className="rounded-lg p-2">
                 <select
