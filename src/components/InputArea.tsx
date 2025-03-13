@@ -141,28 +141,14 @@ export const InputArea = forwardRef(
         return (
             <div className="sticky bottom-0 flex flex-col p-4 bg-white space-y-2 max-h-48">
                 <div className="flex justify-center items-center gap-2">
-                    {/* <input
-                        type="file"
-                        className="hidden"
-                        ref={fileInputRef}
-                        onChange={({ currentTarget }) => {
-                            const { files } = currentTarget;
-                            if (files) {
-                                if (checkAttachment(files[0])) {
-                                    setAttachmentName(files[0].name);
-                                    onUpload(files[0]);
-                                }
-                            }
-                        }}
-                    /> */}
                     <input
                         type="file"
                         className="hidden"
                         ref={fileInputRef}
-                        // accept="image/*,video/*"
                         accept="image/*,video/*,.mov,.mp4,.avi,.mkv"
                         // capture="environment"
                         onChange={({ currentTarget }) => {
+                            console.log(currentTarget.files);
                             const { files } = currentTarget;
                             if (files && files[0]) {
                                 if (checkAttachment(files[0])) {
