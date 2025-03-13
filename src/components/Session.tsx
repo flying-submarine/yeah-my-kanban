@@ -9,6 +9,7 @@ import { setClipboardText } from "../helpers/setClipboardText";
 import { setTextAreaHeight } from "../helpers/setTextAreaHeight";
 import { sendUserAlert } from "../helpers/sendUserAlert";
 import { useTranslation } from "react-i18next";
+import { useLocation} from "react-router-dom";
 
 export enum SessionRole {
     Model = "model",
@@ -39,6 +40,9 @@ interface SessionProps {
 
 export const Session = (props: SessionProps) => {
     const { t } = useTranslation();
+    const location = useLocation();
+    const pathName = location.pathname.split('/').pop();
+    console.log(pathName,'pathName');
     const {
         index,
         prompt,
@@ -65,6 +69,44 @@ export const Session = (props: SessionProps) => {
             sendUserAlert(t("components.Session.handleCopy.copy_failed"), true);
         }
     };
+    if(pathName === 'chart'){
+        return <div className="p-5 mb-3 mr-3 space-y-3 rounded-lg hover:bg-gray-100 transition-all">
+        <div className="flex items-center">
+            <div
+                className={`size-6 rounded-full flex justify-center items-center ${
+                    role === SessionRole.Model
+                        ? "bg-purple-600"
+                        : "bg-lime-700"
+                }`}
+            >
+                <img
+                    className={
+                        role === SessionRole.Model ? "size-3" : "hidden"
+                    }
+                    src={aiIcon}
+                    alt=""
+                />
+                <img
+                    className={
+                        role === SessionRole.User ? "size-3" : "hidden"
+                    }
+                    src={userIcon}
+                    alt=""
+                />
+            </div>
+            <span className="ml-2 font-semibold text-gray-800/100">
+                {role === SessionRole.Model
+                    ? t("components.Session.role_model")
+                    : t("components.Session.role_user")}
+            </span>
+        </div>
+        <div className="px-7">
+            <>
+                {role === SessionRole.User ? children : null}
+            </>
+        </div>
+    </div>
+    }
 
     return (
         <div className="p-5 mb-3 mr-3 space-y-3 rounded-lg hover:bg-gray-100 transition-all">
@@ -98,7 +140,7 @@ export const Session = (props: SessionProps) => {
                 </span>
             </div>
             <div className="px-7">
-                {editState.state === SessionEditState.Edit &&
+                {/* {editState.state === SessionEditState.Edit &&
                 index === editState.index ? (
                     <div className="flex flex-col space-y-2 lg:text-base text-sm">
                         <textarea
@@ -135,9 +177,11 @@ export const Session = (props: SessionProps) => {
                             </button>
                         </div>
                     </div>
-                ) : (
-                    <>{children}</>
-                )}
+                ) : ( */}
+                    <>
+                        {children}
+                    </>
+                {/* )} */}
             </div>
             {/* <div className="flex ml-6 gap-1">
                 <button
