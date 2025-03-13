@@ -281,9 +281,11 @@ const Chat = (props: RouterComponentProps) => {
                                         ? window.location.pathname
                                         : basename
                                 }pyodide`}
-                            >{`${parts}${
-                                !!data.length ? attachmentPostscriptHtml : ""
-                            }`}</Markdown>
+                            >
+                                {`${parts}${
+                                    !!data.length ? attachmentPostscriptHtml : ""
+                                }`}
+                            </Markdown>
                         </Session>
                     );
                 })}

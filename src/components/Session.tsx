@@ -139,7 +139,7 @@ export const Session = (props: SessionProps) => {
                     <>{children}</>
                 )}
             </div>
-            <div className="flex ml-6 gap-1">
+            {/* <div className="flex ml-6 gap-1">
                 <button
                     className="size-6 rounded-lg hover:bg-gray-200 flex justify-center items-center"
                     onClick={handleCopy}
@@ -173,7 +173,7 @@ export const Session = (props: SessionProps) => {
                         <img src={deleteIcon} className="size-4" alt="" />
                     </button>
                 )}
-            </div>
+            </div> */}
         </div>
     );
 };
