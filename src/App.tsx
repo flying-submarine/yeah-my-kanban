@@ -53,7 +53,7 @@ const App = () => {
     const [hasLogined, setHasLogined] = useState(false);
     const [uploadInlineData, setUploadInlineData] =
         useState<GenerativeContentBlob>({ data: "", mimeType: "" });
-    const [sidebarExpand, setSidebarExpand] = useState(window.innerWidth > 768);
+    const [sidebarExpand, setSidebarExpand] = useState(false && window.innerWidth > 768);
 
     const setCurrentLocaleToState = async () =>
         setCurrentLocale(await getCurrentLocale(i18n));

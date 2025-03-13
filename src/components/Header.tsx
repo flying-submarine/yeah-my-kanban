@@ -25,12 +25,23 @@ export const Header = (props: HeaderProps) => {
     return (
         <header className="z-10 sticky top-0 flex px-2 py-3 items-center justify-between border-b bg-white">
             <button
-                className="hover:bg-gray-200 rounded-lg p-2"
-                onClick={onToggleSidebar}
+                className="rounded-lg p-2"
+                // onClick={onToggleSidebar}
             >
-                <img src={menuIcon} className="size-4" alt="" />
+                {/* <img src={menuIcon} className="size-4" alt="" /> */}
+                <h1 className="font-semibold text-lg">{title}</h1>
             </button>
-            {title && <h1 className="font-semibold text-lg">{title}</h1>}
+            <button className="rounded-lg p-2">
+                <select
+                    className="font-semibold text-lg border-0 rounded-lg p-1 outline-none focus:ring-0 focus:border-0 bg-white shadow-none appearance-none"
+                    // value={selectedValue}
+                    // onChange={handleSelectChange}
+                >
+                    <option value="DDA">DDA</option>
+                    <option value="Option1">Option 1</option>
+                    <option value="Option2">Option 2</option>
+                </select>
+            </button>
             <div className="flex">
                 <Link
                     className="hover:bg-gray-200 rounded-lg p-2"
@@ -38,12 +49,12 @@ export const Header = (props: HeaderProps) => {
                 >
                     <img src={newChatIcon} className="size-4" alt="" />
                 </Link>
-                <button
+                {/* <button
                     className="hover:bg-gray-200 rounded-lg p-2"
                     onClick={onPurgeSessions}
                 >
                     <img src={purgeIcon} className="size-4" alt="" />
-                </button>
+                </button> */}
                 {logoutIcon && (
                     <button
                         className="hover:bg-gray-200 rounded-lg p-2"

@@ -123,7 +123,7 @@ export const Sidebar = (props: SidebarProps) => {
     return (
         <nav
             className={`bg-slate-900 overflow-auto flex flex-col justify-between ${
-                expand ? "block" : "hidden"
+                false ? "block" : "hidden"
             }`}
         >
             <div className="sticky top-0 bg-slate-900 py-4 flex justify-center items-center font-semibold text-gray-100 border-b border-gray-400">
