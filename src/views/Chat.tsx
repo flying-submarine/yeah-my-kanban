@@ -221,21 +221,33 @@ const Chat = (props: RouterComponentProps) => {
                             [timestamp]: base64BlobURL,
                         }));
                     }
+                    let attachmentPostscriptHtml = "";
 
-                    const attachmentPostscriptHtml = `\n\n---\n\n<div class="inline-block text-center overflow-hidden">
-                        <a data-image-view="gallery" href="${base64BlobURL}">
-                            <img src="${base64BlobURL}" style="
-                                max-width: 10rem;
-                                margin-top: 0;
-                                margin-bottom: 0.2rem;
-                                border-radius: 0.25rem;
-                            " alt="" />
-                        </a>
-                        <span class="text-xs text-gray-400">
-                            ${viewAttachment}
-                        </span>
-                    </div>`;
-
+                    if (mimeType.startsWith("image/")) {
+                        attachmentPostscriptHtml = `
+                            <a data-image-view="gallery" href="${base64BlobURL}">
+                                <img src="${base64BlobURL}" style="
+                                    max-width: 10rem;
+                                    margin-top: 0;
+                                    margin-bottom: 0.2rem;
+                                    border-radius: 0.25rem;
+                                " alt="" />
+                            </a>
+                            <span class="text-xs text-gray-400">
+                                ${viewAttachment}
+                            </span>
+                        `;
+                    } else if (mimeType.startsWith("video/")) {
+                        attachmentPostscriptHtml = `
+                        <div class="flex border border-gray-300 rounded-md p-2 w-full max-w-[10rem] max-w-sm sm:p-1 sm:max-w-xs">
+                            <div class="w-1/3 bg-gray-300 mr-2 sm:mr-1"></div>
+                            <div class="flex flex-col space-y-0.5">
+                                <p class="font-bold m-0">Video</p>
+                                <p class="m-0">file</p>
+                            </div>
+                        </div>
+                    `;
+                    }
                     const typingEffect = `<div class="inline px-1 bg-gray-900 animate-pulse animate-duration-700"></div>`;
                     if (
                         ai.busy &&
