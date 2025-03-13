@@ -2,8 +2,7 @@ import menuIcon from "../assets/icons/bars-staggered-solid.svg";
 import newChatIcon from "../assets/icons/square-plus-regular.svg";
 import purgeIcon from "../assets/icons/broom-ball-solid.svg";
 import LogoutIcon from "../assets/icons/right-from-bracket-solid.svg";
-import { Link } from "react-router-dom";
-
+import { Link,useNavigate } from "react-router-dom";
 interface HeaderProps {
     readonly title?: string;
     readonly newChatUrl: string;
@@ -14,6 +13,7 @@ interface HeaderProps {
 }
 
 export const Header = (props: HeaderProps) => {
+    const  navigate = useNavigate();
     const {
         title,
         newChatUrl,
@@ -22,6 +22,11 @@ export const Header = (props: HeaderProps) => {
         onToggleSidebar,
         onPurgeSessions,
     } = props;
+
+    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(event.target.value);
+        navigate(event.target.value);
+    };
     return (
         <header className="z-10 sticky top-0 flex px-2 py-3 items-center justify-between border-b bg-white">
             <button
@@ -35,11 +40,11 @@ export const Header = (props: HeaderProps) => {
                 <select
                     className="font-semibold text-lg border-0 rounded-lg p-1 outline-none focus:ring-0 focus:border-0 bg-white shadow-none appearance-none"
                     // value={selectedValue}
-                    // onChange={handleSelectChange}
+                    onChange={handleSelectChange}
                 >
-                    <option value="DDA">DDA</option>
-                    <option value="Option1">Option 1</option>
-                    <option value="Option2">Option 2</option>
+                    <option value="chart">Chart</option>
+                    <option value="">Chat</option>
+                    <option value="video">Video</option>
                 </select>
             </button>
             <div className="flex">

@@ -2,7 +2,10 @@ import { LazyExoticComponent, RefObject, lazy } from "react";
 import { RouterMode } from "../components/RouterWrapper";
 
 const Home = lazy(() => import("../views/Home"));
+const Video = lazy(() => import("../views/Video"));
 const Chat = lazy(() => import("../views/Chat"));
+const Chart = lazy(() => import("../views/Chart"));
+
 const NotFound = lazy(() => import("../views/NotFound"));
 
 export type RouterProp<T> = Record<string, T>;
@@ -32,6 +35,8 @@ export const routerConfig: RouterConfig = {
     routes: {
         index: { prefix: "/", uri: "", suffix: "", element: Home },
         chat: { prefix: "/chat", uri: "/:id", suffix: "", element: Chat },
+        video: { prefix: "/video", uri: "", suffix: "", element: Video },
+        chart: { prefix: "/chart", uri: "", suffix: "", element: Chart },
         default: { prefix: "*", uri: "", suffix: "", element: NotFound },
     },
 };
