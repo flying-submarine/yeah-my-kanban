@@ -194,9 +194,9 @@ const Chart = (props: RouterComponentProps) => {
             document.title = `${sessionTitle} | ${siteTitle}`;
         } else {
             document.title = siteTitle;
-            setChat([
-                { role: "model", parts: invalidPlaceholder, timestamp: 0 },
-            ]);
+            // setChat([
+            //     { role: "model", parts: invalidPlaceholder, timestamp: 0 },
+            // ]);
         }
         setTimeout(() => scrollToBottom(true), 300);
     }, [t, siteTitle, id, sessions, mainSectionRef, scrollToBottom]);
