@@ -102,7 +102,7 @@ export const Session = (props: SessionProps) => {
         </div>
         <div className="px-7">
             <>
-                {role === SessionRole.User ? children : null}
+                { children}
             </>
         </div>
     </div>
