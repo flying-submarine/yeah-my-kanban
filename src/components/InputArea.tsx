@@ -43,32 +43,53 @@ export const InputArea = forwardRef(
         };
 
         const checkAttachment = (file: File) => {
-            const sizeLimit = 4;
+            // const sizeLimit = 4;
+            // const allowedTypes = [
+            //     "image/png",
+            //     "image/jpeg",
+            //     "image/webp",
+            //     "image/heic",
+            //     "image/heif",
+            // ];
+            // if (file.size > sizeLimit * 1024 * 1024 - 100) {
+            //     sendUserAlert(
+            //         t("components.InputArea.checkAttachment.size_exceed", {
+            //             size: sizeLimit,
+            //         }),
+            //         true
+            //     );
+            //     return false;
+            // } else if (!allowedTypes.includes(file.type)) {
+            //     sendUserAlert(
+            //         t("components.InputArea.checkAttachment.illegal_format"),
+            //         true
+            //     );
+            //     return false;
+            // }
+            // sendUserAlert(
+            //     t("components.InputArea.checkAttachment.upload_success")
+            // );
             const allowedTypes = [
                 "image/png",
                 "image/jpeg",
                 "image/webp",
                 "image/heic",
                 "image/heif",
+                "video/mp4",
+                "video/webm",
+                "video/ogg",
+                "video/quicktime", // 允许 MOV 格式
             ];
-            if (file.size > sizeLimit * 1024 * 1024 - 100) {
-                sendUserAlert(
-                    t("components.InputArea.checkAttachment.size_exceed", {
-                        size: sizeLimit,
-                    }),
-                    true
-                );
-                return false;
-            } else if (!allowedTypes.includes(file.type)) {
+            
+            
+            if (!allowedTypes.includes(file.type)) {
                 sendUserAlert(
                     t("components.InputArea.checkAttachment.illegal_format"),
                     true
                 );
                 return false;
             }
-            sendUserAlert(
-                t("components.InputArea.checkAttachment.upload_success")
-            );
+            sendUserAlert(t("components.InputArea.checkAttachment.upload_success"));
             return true;
         };
 
@@ -120,7 +141,7 @@ export const InputArea = forwardRef(
         return (
             <div className="sticky bottom-0 flex flex-col p-4 bg-white space-y-2 max-h-48">
                 <div className="flex justify-center items-center gap-2">
-                    <input
+                    {/* <input
                         type="file"
                         className="hidden"
                         ref={fileInputRef}
@@ -133,7 +154,25 @@ export const InputArea = forwardRef(
                                 }
                             }
                         }}
+                    /> */}
+                    <input
+                        type="file"
+                        className="hidden"
+                        ref={fileInputRef}
+                        // accept="image/*,video/*"
+                        accept="image/*,video/*,.mov,.mp4,.avi,.mkv"
+                        // capture="environment"
+                        onChange={({ currentTarget }) => {
+                            const { files } = currentTarget;
+                            if (files && files[0]) {
+                                if (checkAttachment(files[0])) {
+                                    setAttachmentName(files[0].name);
+                                    onUpload(files[0]);
+                                }
+                            }
+                        }}
                     />
+
                     <button
                         className="bg-gray-100 hover:bg-gray-200 rounded-lg p-3"
                         onClick={({ currentTarget }) => {
