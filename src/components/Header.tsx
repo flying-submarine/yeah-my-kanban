@@ -31,7 +31,7 @@ export const Header = (props: HeaderProps) => {
         <header className="z-10 sticky top-0 flex px-2 py-3 items-center justify-between border-b bg-white">
             <button
                 className="rounded-lg p-2"
-                // onClick={onToggleSidebar}
+                onClick={onToggleSidebar}
             >
                 {/* <img src={menuIcon} className="size-4" alt="" /> */}
                 <h1 className="font-semibold text-lg">{"DDA"}</h1>
