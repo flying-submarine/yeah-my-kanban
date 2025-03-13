@@ -289,6 +289,7 @@ const App = () => {
                         }`}
                     >
                         <Header
+                            busy={ai.busy}
                             logoutIcon={!!passcodes.length}
                             newChatUrl={routes.index.prefix}
                             title={!sidebarExpand ? header : ""}

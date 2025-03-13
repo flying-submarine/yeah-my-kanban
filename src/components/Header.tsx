@@ -5,6 +5,7 @@ import LogoutIcon from "../assets/icons/right-from-bracket-solid.svg";
 import { Link,useNavigate } from "react-router-dom";
 interface HeaderProps {
     readonly title?: string;
+    readonly busy: boolean;
     readonly newChatUrl: string;
     readonly logoutIcon: boolean;
     readonly onLogout: () => void;
@@ -16,13 +17,14 @@ export const Header = (props: HeaderProps) => {
     const  navigate = useNavigate();
     const {
         title,
+        busy,
         newChatUrl,
         logoutIcon,
         onLogout,
         onToggleSidebar,
         onPurgeSessions,
     } = props;
-
+    console.log(busy,'busy');
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         console.log(event.target.value);
         navigate(event.target.value);
@@ -39,8 +41,8 @@ export const Header = (props: HeaderProps) => {
             <button className="rounded-lg p-2">
                 <select
                     className="font-semibold text-lg border-0 rounded-lg p-1 outline-none focus:ring-0 focus:border-0 bg-white shadow-none appearance-none"
-                    // value={selectedValue}
                     onChange={handleSelectChange}
+                    disabled={busy}
                 >
                     <option value="chart">Chart</option>
                     <option value="">Chat</option>
