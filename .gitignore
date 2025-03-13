@@ -1,7 +1,0 @@
-.DS_Store
-*.iml
-idea/ 
-.vscode/ 
-.*.swp
-/node_modules
-/build
