@@ -201,19 +201,22 @@ const App = () => {
             hash.replace("#", "") || pathname
         )?.params as { id: string }) ?? { id: Date.now().toString() };
 
+        const match = matchPath('/chart/:id', hash.replace("#", "") || pathname);
 
-        const sessionDate = new Date(parseInt(id));
+        const chartId = match && match.params.id ? match.params.id : id;
+        
+        const sessionDate = new Date(parseInt(chartId));
         if (isNaN(sessionDate.getTime()) || sessionDate.getFullYear() < 2020) {
             sendUserAlert(t("App.handleSubmit.invalid_session"), true);
             return;
         }
         const modelPlaceholder = t("App.handleSubmit.model_placeholder");
-        const currentSessionHistory = id in sessions ? sessions[id] : [];
+        let currentSessionHistory = chartId in sessions ? sessions[chartId] : [];
         const currentTimestamp = Date.now();
         let _sessions = {
             ...sessions,
-            [id]: [
-                ...(sessions[id] || []),
+            [chartId]: [
+                ...(sessions[chartId] || []),
                 {
                     role: "user",
                     parts: prompt,
@@ -231,9 +234,8 @@ const App = () => {
         dispatch(updateSessions(_sessions));
         // navigate(`/chart/${id}${suffix}`)
 
-        const match = matchPath('/chart/:id', hash.replace("#", "") || pathname);
-
-        const chartId = match ? match.params.id : id;
+        
+       if(chartId) currentSessionHistory = chartId in sessions ? sessions[chartId] : [];
 
         !hash.includes("/chart") ? navigate(`${prefix}/${chartId}${suffix}`) : navigate(`/chart/${chartId}${suffix}`) ;
         // : navigate(`/chart/${Date.now().toString()}`);
@@ -241,14 +243,14 @@ const App = () => {
             if (end) {
                 dispatch(updateAI({ ...ai, busy: false }));
             }
-            let prevParts = _sessions[id][_sessions[id].length - 1].parts;
+            let prevParts = _sessions[chartId][_sessions[chartId].length - 1].parts;
             if (prevParts === modelPlaceholder) {
                 prevParts = "";
             }
             _sessions = {
                 ..._sessions,
-                [id]: [
-                    ..._sessions[id].slice(0, -1),
+                [chartId]: [
+                    ..._sessions[chartId].slice(0, -1),
                     {
                         role: "model",
                         parts: `${prevParts}${message}`,
