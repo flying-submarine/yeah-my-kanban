@@ -19,6 +19,7 @@ import { isMobileDevice } from "../helpers/isMobileDevice";
 
 interface InputAreaProps {
     readonly busy: boolean;
+    readonly isChart: boolean;
     readonly minHeight: number;
     readonly maxHeight?: number;
     readonly onSubmit: (prompt: string) => void;
@@ -27,7 +28,7 @@ interface InputAreaProps {
 
 export const InputArea = forwardRef(
     (props: InputAreaProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
-        const { busy, minHeight, maxHeight, onSubmit, onUpload } = props;
+        const { busy,isChart, minHeight, maxHeight, onSubmit, onUpload } = props;
         const { t } = useTranslation();
 
         const fileInputRef = useRef<HTMLInputElement>(null);
@@ -159,7 +160,7 @@ export const InputArea = forwardRef(
                         }}
                     />
 
-                    <button
+                    {!isChart ? <button
                         className="bg-gray-100 hover:bg-gray-200 rounded-lg p-3"
                         onClick={({ currentTarget }) => {
                             if (!!attachmentName.length) {
@@ -185,7 +186,7 @@ export const InputArea = forwardRef(
                             src={attachmentIcon}
                             alt=""
                         />
-                    </button>
+                    </button> : null}
                     <div className="relative w-full items-center justify-center flex">
                         <div className="absolute left-0 flex items-center pl-2">
                             <button

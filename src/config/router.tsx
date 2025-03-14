@@ -37,6 +37,6 @@ export const routerConfig: RouterConfig = {
         chat: { prefix: "/chat", uri: "/:id", suffix: "", element: Chat },
         video: { prefix: "/video", uri: "", suffix: "", element: Video },
         chart: { prefix: "/chart", uri: "/:id", suffix: "", element: Chart },
-        default: { prefix: "*", uri: "", suffix: "", element: NotFound },
+        // default: { prefix: "*", uri: "", suffix: "", element: NotFound },
     },
 };

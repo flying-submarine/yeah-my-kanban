@@ -232,9 +232,6 @@ const App = () => {
         };
         dispatch(updateAI({ ...ai, busy: true }));
         dispatch(updateSessions(_sessions));
-        // navigate(`/chart/${id}${suffix}`)
-
-        
        if(chartId) currentSessionHistory = chartId in sessions ? sessions[chartId] : [];
 
         !hash.includes("/chart") ? navigate(`${prefix}/${chartId}${suffix}`) : navigate(`/chart/${chartId}${suffix}`) ;
@@ -361,6 +358,7 @@ const App = () => {
                             minHeight={45}
                             ref={textAreaRef}
                             busy={ai.busy}
+                            isChart = {window.location.hash.includes("/chart") }
                             onSubmit={handleSubmit}
                             onUpload={handleUpload}
                         />
