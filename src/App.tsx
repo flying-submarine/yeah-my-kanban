@@ -208,7 +208,7 @@ const App = () => {
         };
         dispatch(updateAI({ ...ai, busy: true }));
         dispatch(updateSessions(_sessions));
-        !hash.includes("/chart") && navigate(`${prefix}/${id}${suffix}`);
+        !hash.includes("/chart") ? navigate(`${prefix}/${id}${suffix}`) : navigate(`/chart/${Date.now().toString()}`);
         const handler = (message: string, end: boolean) => {
             if (end) {
                 dispatch(updateAI({ ...ai, busy: false }));
