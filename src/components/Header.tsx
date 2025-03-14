@@ -44,7 +44,7 @@ export const Header = (props: HeaderProps) => {
                     onChange={handleSelectChange}
                     disabled={busy}
                 >
-                    <option value={`chart/${Date.now().toString()}`}>Chart</option>
+                    <option value={`chart`}>Chart</option>
                     <option value="">Chat</option>
                     <option value="video">Video</option>
                 </select>

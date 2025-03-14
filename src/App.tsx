@@ -60,6 +60,23 @@ const App = () => {
 
     const handleSwitchLocale = (locale: string) => setUserLocale(i18n, locale);
 
+    const matchUrl = () => {
+        const routes = [
+            { path: '/chart/:id', label: 'chart' },
+            { path: '/chat/:id', label: 'chat' },
+            { path: '/', label: 'chat' },
+            { path: '/video', label: 'video' }
+        ];
+    
+        for (let route of routes) {
+            if (matchPath(route.path, location.pathname)) {
+                return route.label;
+            }
+        }
+    
+        return '';
+    };
+
     const handleExportSession = (id: string) => {
         const session = sessions[id];
         if (session) {
@@ -170,16 +187,21 @@ const App = () => {
     };
 
     const handleSubmit = async (prompt: string) => {
+        console.log('handleSubmit', matchUrl());
         if (!prompt.trim().length) {
             sendUserAlert(t("App.handleSubmit.invalid_message"), true);
             return;
         }
         const { prefix, uri, suffix } = routes.chat;
         const { hash, pathname } = window.location;
+
+
         let { id } = (matchPath(
             { path: `${prefix}${uri}${suffix}` },
             hash.replace("#", "") || pathname
         )?.params as { id: string }) ?? { id: Date.now().toString() };
+
+
         const sessionDate = new Date(parseInt(id));
         if (isNaN(sessionDate.getTime()) || sessionDate.getFullYear() < 2020) {
             sendUserAlert(t("App.handleSubmit.invalid_session"), true);
@@ -207,7 +229,14 @@ const App = () => {
         };
         dispatch(updateAI({ ...ai, busy: true }));
         dispatch(updateSessions(_sessions));
-        !hash.includes("/chart") ? navigate(`${prefix}/${id}${suffix}`) : navigate(`/chart/${Date.now().toString()}`);
+        // navigate(`/chart/${id}${suffix}`)
+
+        const match = matchPath('/chart/:id', hash.replace("#", "") || pathname);
+
+        const chartId = match ? match.params.id : id;
+
+        !hash.includes("/chart") ? navigate(`${prefix}/${chartId}${suffix}`) : navigate(`/chart/${chartId}${suffix}`) ;
+        // : navigate(`/chart/${Date.now().toString()}`);
         const handler = (message: string, end: boolean) => {
             if (end) {
                 dispatch(updateAI({ ...ai, busy: false }));
