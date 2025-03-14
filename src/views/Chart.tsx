@@ -184,22 +184,22 @@ const Chart = (props: RouterComponentProps) => {
         }
     };
 
-    useEffect(() => {
-        if (id && id in sessions) {
-            setChat(sessions[id]);
-            let sessionTitle = sessions[id][0].title ?? sessions[id][0].parts;
-            if (sessionTitle.length > 20) {
-                sessionTitle = `${sessionTitle.substring(0, 20)} ...`;
-            }
-            document.title = `${sessionTitle} | ${siteTitle}`;
-        } else {
-            document.title = siteTitle;
-            // setChat([
-            //     { role: "model", parts: invalidPlaceholder, timestamp: 0 },
-            // ]);
-        }
-        setTimeout(() => scrollToBottom(true), 300);
-    }, [t, siteTitle, id, sessions, mainSectionRef, scrollToBottom]);
+    // useEffect(() => {
+    //     if (id && id in sessions) {
+    //         setChat(sessions[id]);
+    //         let sessionTitle = sessions[id][0].title ?? sessions[id][0].parts;
+    //         if (sessionTitle.length > 20) {
+    //             sessionTitle = `${sessionTitle.substring(0, 20)} ...`;
+    //         }
+    //         document.title = `${sessionTitle} | ${siteTitle}`;
+    //     } else {
+    //         document.title = siteTitle;
+    //         setChat([
+    //             { role: "model", parts: invalidPlaceholder, timestamp: 0 },
+    //         ]);
+    //     }
+    //     setTimeout(() => scrollToBottom(true), 300);
+    // }, [t, siteTitle, id, sessions, mainSectionRef, scrollToBottom]);
 
     return (
         <Container className="max-w-[calc(100%)] py-5 pl-3 mb-auto mx-1 md:mx-[4rem] lg:mx-[8rem]">

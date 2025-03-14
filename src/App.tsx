@@ -39,7 +39,6 @@ const App = () => {
         acc[key] = value.label;
         return acc;
     }, {} as Record<string, string>);
-    console.log("resources",locales, resources);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -258,6 +257,27 @@ const App = () => {
         }
         setCurrentLocaleToState();
     }, [t, hasLogined, passcodes, site]);
+
+    // useEffect(() => {
+    //     async function fetchStreamData() {
+    //         const url = "http://8.219.245.95:5005/chat/bi/api/stream?content=Calculate_monthly_income";
+    //         const eventSource = new EventSource(url);
+
+    //         eventSource.onmessage = function(event) {
+    //             const data = JSON.parse(event.data);
+    //             console.log(data);
+    //         };
+
+    //         eventSource.onerror = function(err) {
+    //             console.error("EventSource failed:", err);
+    //             eventSource.close();
+    //         };
+    //     }
+        
+    //     // 调用函数
+    //     fetchStreamData();
+        
+    // }, []);
 
     return (
         <Container
