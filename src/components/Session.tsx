@@ -41,6 +41,7 @@ interface SessionProps {
 export const Session = (props: SessionProps) => {
     const { t } = useTranslation();
     const location = useLocation();
+    const { hash } = window.location;
     const pathName = location.pathname.split('/').pop();
     console.log(pathName,'pathName');
     const {
@@ -69,7 +70,7 @@ export const Session = (props: SessionProps) => {
             sendUserAlert(t("components.Session.handleCopy.copy_failed"), true);
         }
     };
-    if(pathName === 'chart'){
+    if(hash.includes("/chart")){
         return <div className="p-5 mb-3 mr-3 space-y-3 rounded-lg hover:bg-gray-100 transition-all">
         <div className="flex items-center">
             <div
