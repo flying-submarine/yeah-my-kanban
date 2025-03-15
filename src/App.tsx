@@ -187,7 +187,6 @@ const App = () => {
     };
 
     const handleSubmit = async (prompt: string) => {
-        console.log('handleSubmit', matchUrl());
         if (!prompt.trim().length) {
             sendUserAlert(t("App.handleSubmit.invalid_message"), true);
             return;
@@ -250,7 +249,7 @@ const App = () => {
                     ..._sessions[chartId].slice(0, -1),
                     {
                         role: "model",
-                        parts: `${prevParts}${message}`,
+                        parts: `${message}`,
                         timestamp: Date.now(),
                     },
                 ],
@@ -286,26 +285,6 @@ const App = () => {
         setCurrentLocaleToState();
     }, [t, hasLogined, passcodes, site]);
 
-    // useEffect(() => {
-    //     async function fetchStreamData() {
-    //         const url = "http://8.219.245.95:5005/chat/bi/api/stream?content=Calculate_monthly_income";
-    //         const eventSource = new EventSource(url);
-
-    //         eventSource.onmessage = function(event) {
-    //             const data = JSON.parse(event.data);
-    //             console.log(data);
-    //         };
-
-    //         eventSource.onerror = function(err) {
-    //             console.error("EventSource failed:", err);
-    //             eventSource.close();
-    //         };
-    //     }
-        
-    //     // 调用函数
-    //     fetchStreamData();
-        
-    // }, []);
 
     return (
         <Container

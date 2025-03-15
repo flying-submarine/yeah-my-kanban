@@ -149,7 +149,6 @@ export const InputArea = forwardRef(
                         accept="image/*,video/*,.mov,.mp4,.avi,.mkv"
                         // capture="environment"
                         onChange={({ currentTarget }) => {
-                            console.log(currentTarget.files);
                             const { files } = currentTarget;
                             if (files && files[0]) {
                                 if (checkAttachment(files[0])) {

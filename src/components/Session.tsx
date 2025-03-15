@@ -24,6 +24,7 @@ export enum SessionEditState {
 
 interface SessionProps {
     readonly index: number;
+    readonly type: string;
     readonly prompt: string;
     readonly postscript: string;
     readonly role: SessionRole;
@@ -43,10 +44,10 @@ export const Session = (props: SessionProps) => {
     const location = useLocation();
     const { hash } = window.location;
     const pathName = location.pathname.split('/').pop();
-    console.log(pathName,'pathName');
     const {
         index,
         prompt,
+        type,
         postscript,
         editState,
         role,
@@ -70,44 +71,46 @@ export const Session = (props: SessionProps) => {
             sendUserAlert(t("components.Session.handleCopy.copy_failed"), true);
         }
     };
-    if(hash.includes("/chart")){
-        return <div className="p-5 mb-3 mr-3 space-y-3 rounded-lg hover:bg-gray-100 transition-all">
-        <div className="flex items-center">
-            <div
-                className={`size-6 rounded-full flex justify-center items-center ${
-                    role === SessionRole.Model
-                        ? "bg-purple-600"
-                        : "bg-lime-700"
-                }`}
-            >
-                <img
-                    className={
-                        role === SessionRole.Model ? "size-3" : "hidden"
-                    }
-                    src={aiIcon}
-                    alt=""
-                />
-                <img
-                    className={
-                        role === SessionRole.User ? "size-3" : "hidden"
-                    }
-                    src={userIcon}
-                    alt=""
-                />
-            </div>
-            <span className="ml-2 font-semibold text-gray-800/100">
-                {role === SessionRole.Model
-                    ? t("components.Session.role_model")
-                    : t("components.Session.role_user")}
-            </span>
-        </div>
-        <div className="px-7">
-            <>
-                { children}
-            </>
-        </div>
-    </div>
-    }
+    // if(type === "chart"){
+    //     return <div className="p-5 mb-3 mr-3 space-y-3 rounded-lg hover:bg-gray-100 transition-all">
+    //     <div className="flex items-center">
+    //         <div
+    //             className={`size-6 rounded-full flex justify-center items-center ${
+    //                 role === SessionRole.Model
+    //                     ? "bg-purple-600"
+    //                     : "bg-lime-700"
+    //             }`}
+    //         >
+    //             <img
+    //                 className={
+    //                     role === SessionRole.Model ? "size-3" : "hidden"
+    //                 }
+    //                 src={aiIcon}
+    //                 alt=""
+    //             />
+    //             <img
+    //                 className={
+    //                     role === SessionRole.User ? "size-3" : "hidden"
+    //                 }
+    //                 src={userIcon}
+    //                 alt=""
+    //             />
+    //         </div>
+    //         <span className="ml-2 font-semibold text-gray-800/100">
+    //             {role === SessionRole.Model
+    //                 ? t("components.Session.role_model")
+    //                 : t("components.Session.role_user")}
+    //         </span>
+    //     </div>
+    //     <div className="px-7">
+    //         <>
+    //             { 1112}
+    //         </>
+    //     </div>
+    // </div>
+    // }
+
+
 
     return (
         <div className="p-5 mb-3 mr-3 space-y-3 rounded-lg hover:bg-gray-100 transition-all">

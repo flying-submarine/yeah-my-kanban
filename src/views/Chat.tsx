@@ -259,6 +259,7 @@ const Chat = (props: RouterComponentProps) => {
                     return (
                         <Session
                             key={index}
+                            type={"chat"}
                             index={index}
                             prompt={parts}
                             editState={editState}

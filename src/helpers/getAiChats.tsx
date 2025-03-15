@@ -28,30 +28,64 @@ export const getAiChats = async (
         });
 
         if (stream) {
-            const chat = model.startChat({ ...options, history: payload });
-            const result = await chat.sendMessageStream(prompts);
-            for await (const chunk of result.stream) {
-                const chunkText = chunk.text();
-                if (chunkText.length > TypeWriterEffectThreshold) {
-                    const chunkTextArr = chunkText.split("");
-                    for (
-                        let i = 0;
-                        i < chunkTextArr.length;
-                        i += TypeWriterEffectThreshold
-                    ) {
-                        onChatMessage(
-                            chunkTextArr
-                                .slice(i, i + TypeWriterEffectThreshold)
-                                .join(""),
-                            false
-                        );
-                        await asyncSleep(Math.random() * 600 + 300);
-                    }
-                } else {
-                    onChatMessage(chunkText, false);
+            // echarts
+            // : 
+            // "{\n  \"title\": {\n    \"text\": \"优秀司机评估标准\"\n  },\n  \"tooltip\": {\n    \"trigger\": \"axis\"\n  },\n  \"legend\": {\n    \"data\": [\"评分\"]\n  },\n  \"xAxis\": [\n    {\n      \"type\": \"category\",\n      \"data\": [\"遵守交通规则\", \"安全意识强\", \"良好的驾驶习惯\", \"专业素养高\", \"熟悉路线\", \"应急处理能力\", \"持续学习与改进\"]\n    }\n  ],\n  \"yAxis\": [\n    {\n      \"type\": \"value\"\n    }\n  ],\n  \"series\": [\n    {\n      \"name\": \"评分\",\n      \"type\": \"bar\",\n      \"data\": [5, 5, 5, 5, 5, 5, 5]\n    }\n  ]\n}"
+            // listString
+            // : 
+            // "[]"
+            // optimize
+            // : 
+            // "评估优秀司机的标准"
+            // sql
+            // : 
+            // "\"\""
+            // summer
+            // : 
+            // "
+            const url = `http://8.219.245.95:5005/chat/bi/api/stream?content=${prompts}`;
+            const eventSource = new EventSource(url);
+
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                const {status,content} = data
+                
+                if(status === "optimize_generating"){
+
                 }
-            }
-            onChatMessage("", true);
+                if(status === "optimize_complete"){
+                   
+                }
+                if(status === "sql_generating·"){
+
+                }
+                if(status === "sql_complete"){
+                   
+                }
+                if(status === "list_complete"){
+                   
+                }
+                if(status === "summer_generating"){
+                   
+                }
+                if(status === "summer_complete"){
+                   
+                }
+                if(status === "echarts_generating"){
+                    onChatMessage(content.echarts, false);
+
+                }
+                if(status === "echarts_complete"){
+                    // onChatMessage(content.optimize, false);
+                    onChatMessage(content.echarts, true);
+                }
+                console.log(data);
+            };
+
+            eventSource.onerror = function(err) {
+                console.error("EventSource failed:", err);
+                eventSource.close();
+            };
         } else {
             const chat = model.startChat({
                 ...options,

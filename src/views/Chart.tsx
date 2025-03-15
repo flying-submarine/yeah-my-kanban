@@ -36,10 +36,6 @@ const Chart = (props: RouterComponentProps) => {
         (state: ReduxStoreProps) => state.sessions.sessions
     );
 
-    console.log(useSelector(
-        (state: ReduxStoreProps) => state
-    ));
-
     const ai = useSelector((state: ReduxStoreProps) => state.ai.ai);
     const { id } = useParams<{ id: keyof typeof sessions }>();
 
@@ -51,6 +47,7 @@ const Chart = (props: RouterComponentProps) => {
     const [attachmentsURL, setAttachmentsURL] = useState<
         Record<number, string>
     >({});
+
     const [pythonRuntime, setPythonRuntime] = useState<PyodideInterface | null>(
         null
     );
@@ -264,6 +261,7 @@ const Chart = (props: RouterComponentProps) => {
                     return (
                         <Session
                             key={index}
+                            type={"chart"}
                             index={index}
                             prompt={parts}
                             editState={editState}

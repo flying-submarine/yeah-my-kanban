@@ -24,9 +24,7 @@ export const Header = (props: HeaderProps) => {
         onToggleSidebar,
         onPurgeSessions,
     } = props;
-    console.log(busy,'busy');
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(event.target.value);
         navigate(event.target.value);
     };
     return (

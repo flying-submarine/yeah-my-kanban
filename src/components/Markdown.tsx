@@ -44,7 +44,6 @@ export const Markdown = (props: MarkdownProps) => {
         onPythonRuntimeCreated,
         children,
     } = props;
-
     const [pythonResult, setPythonResult] = useState<{
         result: string;
         startPos: Point | null;
