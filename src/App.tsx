@@ -242,7 +242,6 @@ const App = () => {
             if (prevParts === modelPlaceholder) {
                 prevParts = "";
             }
-            console.log(params,'params')
             _sessions = {
                 ..._sessions,
                 [chartId]: [
