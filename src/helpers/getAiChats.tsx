@@ -101,7 +101,7 @@ export const getAiChats = async (
                         ...param,
                     });
                 }
-                console.log(data);
+                // console.log(data);
             };
 
             eventSource.onerror = function(err) {
