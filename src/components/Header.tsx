@@ -54,12 +54,12 @@ export const Header = (props: HeaderProps) => {
                 >
                     <img src={newChatIcon} className="size-4" alt="" />
                 </Link>
-                {/* <button
+                <button
                     className="hover:bg-gray-200 rounded-lg p-2"
                     onClick={onPurgeSessions}
                 >
                     <img src={purgeIcon} className="size-4" alt="" />
-                </button> */}
+                </button>
                 {logoutIcon && (
                     <button
                         className="hover:bg-gray-200 rounded-lg p-2"
