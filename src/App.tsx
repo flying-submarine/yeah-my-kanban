@@ -359,7 +359,10 @@ const App = () => {
                     title={header}
                     logo={siteLogo}
                     passcodes={passcodes}
-                    onPasscodeCorrect={() => setHasLogined(true)}
+                    onPasscodeCorrect={() =>{
+                        setHasLogined(true)
+                        navigate(routes.index.prefix)
+                    }}
                 />
             )}
         </Container>

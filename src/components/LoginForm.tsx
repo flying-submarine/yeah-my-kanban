@@ -53,7 +53,7 @@ export const LoginForm = (props: LoginFormProps) => {
                 sendUserAlert(
                     t("components.LoginForm.handleLogin.login_success")
                 );
-                await asyncSleep(500);
+                // await asyncSleep(500);
                 onPasscodeCorrect();
             } else {
                 sendUserAlert(
