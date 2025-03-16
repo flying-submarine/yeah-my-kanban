@@ -231,11 +231,10 @@ const App = () => {
         };
         dispatch(updateAI({ ...ai, busy: true }));
         dispatch(updateSessions(_sessions));
-       if(chartId) currentSessionHistory = chartId in sessions ? sessions[chartId] : [];
-
+        if(chartId) currentSessionHistory = chartId in sessions ? sessions[chartId] : [];
         !hash.includes("/chart") ? navigate(`${prefix}/${chartId}${suffix}`) : navigate(`/chart/${chartId}${suffix}`) ;
-        // : navigate(`/chart/${Date.now().toString()}`);
-        const handler = (message: string, end: boolean) => {
+
+        const handler = (message: string, end: boolean,params:Object) => {
             if (end) {
                 dispatch(updateAI({ ...ai, busy: false }));
             }
@@ -243,6 +242,7 @@ const App = () => {
             if (prevParts === modelPlaceholder) {
                 prevParts = "";
             }
+            console.log(params,'params')
             _sessions = {
                 ..._sessions,
                 [chartId]: [
@@ -251,9 +251,12 @@ const App = () => {
                         role: "model",
                         parts: `${message}`,
                         timestamp: Date.now(),
+                        // params: params
+                        
                     },
                 ],
             };
+
             dispatch(updateSessions(_sessions));
         };
         if (!uploadInlineData.data.length) {

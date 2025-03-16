@@ -6,7 +6,7 @@ export const getAiContent = async (
     prompts: string,
     inlineData: GenerativeContentBlob,
     stream: boolean,
-    onContentMessage: (message: string, end: boolean) => void
+    onContentMessage: (message: string, end: boolean,params:Object) => void
 ) => {
     const TypeWriterEffectThreshold = 30;
     try {
@@ -28,15 +28,15 @@ export const getAiContent = async (
                             chunkTextArr
                                 .slice(i, i + TypeWriterEffectThreshold)
                                 .join(""),
-                            false
+                            false,{}
                         );
                         await asyncSleep(Math.random() * 600 + 300);
                     }
                 } else {
-                    onContentMessage(chunkText, false);
+                    onContentMessage(chunkText, false,{});
                 }
             }
-            onContentMessage("", true);
+            onContentMessage("", true,{});
         } else {
             const result = await model.generateContent([
                 prompts,
@@ -55,17 +55,18 @@ export const getAiContent = async (
                         textArr
                             .slice(i, i + TypeWriterEffectThreshold)
                             .join(""),
-                        false
+                        false,
+                        {}
                     );
                     await asyncSleep(Math.random() * 600 + 300);
                 }
             } else {
-                onContentMessage(text, false);
+                onContentMessage(text, false,{});
             }
-            onContentMessage("", true);
+            onContentMessage("", true,{});
         }
     } catch (e) {
         const err = e as any;
-        onContentMessage(err.message, true);
+        onContentMessage(err.message, true,{});
     }
 };

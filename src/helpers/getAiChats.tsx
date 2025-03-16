@@ -2,13 +2,26 @@ import { BaseParams, GenerativeModel, Part } from "@google/generative-ai";
 import { SessionHistory } from "../store/sessions";
 import { asyncSleep } from "./asyncSleep";
 
+
+interface DataContent {
+    optimize?: string;
+    sql?: string;
+    list?: string;
+    summer?: string;
+    echarts?: string;
+}
+
+interface Data {
+    status: string;
+    content?: DataContent;
+}
 export const getAiChats = async (
     model: GenerativeModel,
     history: SessionHistory[],
     prompts: string | Array<string | Part>,
     stream: boolean,
     options: BaseParams,
-    onChatMessage: (message: string, end: boolean) => void
+    onChatMessage: (message: string, end: boolean,params:Object) => void
 ) => {
     const TypeWriterEffectThreshold = 30;
     try {
@@ -28,56 +41,65 @@ export const getAiChats = async (
         });
 
         if (true) {
-            // echarts
-            // : 
-            // "{\n  \"title\": {\n    \"text\": \"优秀司机评估标准\"\n  },\n  \"tooltip\": {\n    \"trigger\": \"axis\"\n  },\n  \"legend\": {\n    \"data\": [\"评分\"]\n  },\n  \"xAxis\": [\n    {\n      \"type\": \"category\",\n      \"data\": [\"遵守交通规则\", \"安全意识强\", \"良好的驾驶习惯\", \"专业素养高\", \"熟悉路线\", \"应急处理能力\", \"持续学习与改进\"]\n    }\n  ],\n  \"yAxis\": [\n    {\n      \"type\": \"value\"\n    }\n  ],\n  \"series\": [\n    {\n      \"name\": \"评分\",\n      \"type\": \"bar\",\n      \"data\": [5, 5, 5, 5, 5, 5, 5]\n    }\n  ]\n}"
-            // listString
-            // : 
-            // "[]"
-            // optimize
-            // : 
-            // "评估优秀司机的标准"
-            // sql
-            // : 
-            // "\"\""
-            // summer
-            // : 
-            // "
             const url = `http://8.219.245.95:5005/chat/bi/api/stream?content=${prompts}`;
             const eventSource = new EventSource(url);
 
             eventSource.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-                const {status,content} = data
-                
+                const {status,content={
+                    optimize:"",
+                    sql:"",
+                    list:"[]",
+                    summer:"",
+                    echarts:""
+                }}:Data = data
+                let param:DataContent = {}
+                const text = content.optimize || ""
                 if(status === "optimize_generating"){
-
+                    onChatMessage(text, false, {
+                        ...param
+                    });
                 }
                 if(status === "optimize_complete"){
-                   
+                    onChatMessage(text, false, {
+                        ...param
+                    });
                 }
-                if(status === "sql_generating·"){
+                // if(status === "sql_generating·"){
 
-                }
+                // // }
                 if(status === "sql_complete"){
-                   
+                    param.sql = content.sql
+                    onChatMessage(text, false, {
+                        ...param
+                    });
                 }
                 if(status === "list_complete"){
-                   
+                    param.list = content.list ? JSON.parse(content.list) : [];
+                    onChatMessage(text, false, {
+                        ...param,
+                    });
                 }
-                if(status === "summer_generating"){
+                // if(status === "summer_generating"){
                    
-                }
+                // }
                 if(status === "summer_complete"){
-                   
+                    param.summer = content.summer
+                    onChatMessage(text, false, {
+                        ...param,
+                    });
                 }
-                if(status === "echarts_generating"){
-                    onChatMessage(content.echarts, false);
+                // if(status === "echarts_generating"){
+                //     onChatMessage(text, false, {
+                //         echarts: content.echarts
+                //     });
 
-                }
+                // }
                 if(status === "echarts_complete"){
-                    // onChatMessage(content.optimize, false);
-                    onChatMessage(content.echarts, true);
+                    param.echarts = content.echarts;
+                    onChatMessage(text, true, {
+                        ...param,
+                    });
                 }
                 console.log(data);
             };
@@ -105,17 +127,18 @@ export const getAiChats = async (
                         textArr
                             .slice(i, i + TypeWriterEffectThreshold)
                             .join(""),
-                        false
+                        false,
+                        {}
                     );
                     await asyncSleep(Math.random() * 600 + 300);
                 }
             } else {
-                onChatMessage(text, false);
+                onChatMessage(text, false,{});
             }
-            onChatMessage("", true);
+            onChatMessage("", true,{});
         }
     } catch (e) {
         const err = e as any;
-        onChatMessage(err.message, true);
+        onChatMessage(err.message, true,{});
     }
 };
