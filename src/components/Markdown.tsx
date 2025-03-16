@@ -19,10 +19,10 @@ import { useTranslation } from "react-i18next";
 
 interface MarkdownProps {
     readonly className?: string;
-    readonly typingEffect: string;
-    readonly pythonRepoUrl: string;
-    readonly pythonRuntime: PyodideInterface | null;
-    readonly onPythonRuntimeCreated: (pyodide: PyodideInterface) => void;
+    // readonly typingEffect: string;
+    // readonly pythonRepoUrl: string;
+    // readonly pythonRuntime: PyodideInterface | null;
+    // readonly onPythonRuntimeCreated: (pyodide: PyodideInterface) => void;
     readonly children: string;
 }
 
@@ -38,10 +38,10 @@ export const Markdown = (props: MarkdownProps) => {
     const { t } = useTranslation();
     const {
         className,
-        typingEffect,
-        pythonRepoUrl,
-        pythonRuntime,
-        onPythonRuntimeCreated,
+        // typingEffect,
+        // pythonRepoUrl,
+        // pythonRuntime,
+        // onPythonRuntimeCreated,
         children,
     } = props;
     const [pythonResult, setPythonResult] = useState<{
@@ -107,20 +107,20 @@ export const Markdown = (props: MarkdownProps) => {
                 startPos,
                 endPos,
             });
-            let runtime = pythonRuntime;
-            if (!runtime) {
-                runtime = await getPythonRuntime(pythonRepoUrl);
-                onPythonRuntimeCreated(runtime);
-            }
-            await getPythonResult(
-                runtime,
-                code,
-                handleRunnerResult,
-                handleRunnerResult,
-                handleRunnerImporting,
-                handleRunnerResult,
-                handleJobFinished
-            );
+            // let runtime = pythonRuntime;
+            // if (!runtime) {
+            //     runtime = await getPythonRuntime(pythonRepoUrl);
+            //     onPythonRuntimeCreated(runtime);
+            // }
+            // await getPythonResult(
+            //     // runtime,
+            //     code,
+            //     handleRunnerResult,
+            //     handleRunnerResult,
+            //     handleRunnerImporting,
+            //     handleRunnerResult,
+            //     handleJobFinished
+            // );
             (currentTarget as HTMLButtonElement).disabled = false;
         },
         300
@@ -155,7 +155,8 @@ export const Markdown = (props: MarkdownProps) => {
                     const lang = match !== null ? match[1] : "";
                     const code = (
                         !!children ? String(children) : TypingEffectPlaceholder
-                    ).replace(typingEffect, TypingEffectPlaceholder);
+                    )
+                    // .replace(typingEffect, TypingEffectPlaceholder);
                     const startPos = node?.position?.start ?? null;
                     const endPos = node?.position?.end ?? null;
                     return match ? (

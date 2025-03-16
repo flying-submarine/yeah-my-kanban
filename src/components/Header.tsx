@@ -59,7 +59,6 @@ export const Header = (props: HeaderProps) => {
             <div className="flex">
                 <Link
                     className="hover:bg-gray-200 rounded-lg p-2"
-                    // disabled={busy}
                     onClick={(e) => busy && e.preventDefault()} // 防止点击跳转
                     to={location.pathname.includes('chart') ? '/chart' : 
                         location.pathname.includes('video') ? '/video' : '/'}
@@ -76,6 +75,7 @@ export const Header = (props: HeaderProps) => {
                     <button
                         className="hover:bg-gray-200 rounded-lg p-2"
                         onClick={onLogout}
+                        disabled={busy}
                     >
                         <img src={LogoutIcon} className="size-4" alt="" />
                     </button>

@@ -272,16 +272,16 @@ const Chat = (props: RouterComponentProps) => {
                             }
                         >
                             <Markdown
-                                typingEffect={typingEffect}
-                                pythonRuntime={pythonRuntime}
-                                onPythonRuntimeCreated={
-                                    handlePythonRuntimeCreated
-                                }
-                                pythonRepoUrl={`${
-                                    mode === "hash"
-                                        ? window.location.pathname
-                                        : basename
-                                }pyodide`}
+                                // typingEffect={typingEffect}
+                                // pythonRuntime={pythonRuntime}
+                                // onPythonRuntimeCreated={
+                                //     handlePythonRuntimeCreated
+                                // }
+                                // pythonRepoUrl={`${
+                                //     mode === "hash"
+                                //         ? window.location.pathname
+                                //         : basename
+                                // }pyodide`}
                             >
                                 {`${parts}${
                                     !!data.length ? attachmentPostscriptHtml : ""
