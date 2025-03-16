@@ -41,7 +41,7 @@ export const getAiChats = async (
         });
 
         if (true) {
-            const url = `http://8.219.245.95:5005/chat/bi/api/stream?content=${prompts}`;
+            const url = `/chat/bi/api/stream?content=${prompts}`;
             const eventSource = new EventSource(url);
 
             eventSource.onmessage = function(event) {
