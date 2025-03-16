@@ -36,7 +36,7 @@ export const Header = (props: HeaderProps) => {
         location.pathname.includes('video') ? 'video' : '';
 
     return (
-        <header className="z-10 sticky top-0 flex px-2 py-3 items-center justify-between border-b bg-white">
+        <header className="z-10 sticky top-0 flex px-2 py-1 items-center justify-between border-b bg-white">
             <button
                 className="rounded-lg p-2"
                 // onClick={onToggleSidebar}
