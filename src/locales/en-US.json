@@ -28,7 +28,7 @@
             "on_confirmed": "Conversation history cleared"
         },
         "handleLogout": {
-            "confirm_message": "If this is not your PC, please clear your conversation history before logging out",
+            "confirm_message": "Are you sure you want to logging out",
             "confirm_title": "Confirm logout",
             "confirm_button": "OK",
             "cancel_button": "Cancel",
@@ -83,7 +83,7 @@
             "login_button": "Login",
             "handleLogin": {
                 "invalid_passcode": "Passcode is incorrect",
-                "login_success": "Login successful, redirecting",
+                "login_success": "Login successful",
                 "login_failed": "Passcode is incorrect, login failed"
             }
         },

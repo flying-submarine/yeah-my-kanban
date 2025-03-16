@@ -32,6 +32,7 @@ import { getCurrentLocale } from "./helpers/getCurrentLocale";
 const App = () => {
     const { t } = useTranslation();
     const { sse, title, passcodes } = globalConfig;
+    console.log(passcodes,'passcodes')
     const { header, site } = title;
     const { routes } = routerConfig;
     const { fallback, resources } = i18nConfig;
@@ -252,7 +253,7 @@ const App = () => {
                         parts: `${message}`,
                         timestamp: Date.now(),
                         // params: params
-                        
+
                     },
                 ],
             };

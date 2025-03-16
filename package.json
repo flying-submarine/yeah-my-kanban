@@ -36,8 +36,8 @@
     },
     "proxy": "http://8.219.245.95:5005",
     "scripts": {
-        "start": "cross-env BROWSER=none GENERATE_SOURCEMAP=false react-scripts start",
-        "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
+        "start": "cross-env BROWSER=none GENERATE_SOURCEMAP=false REACT_APP_PASSCODE_MD5='24C9E15E52AFC47C225B757E7BEE1F9D|7E58D63B60197CEB55A1C487989A3720|92877AF70A45FD6A2ED7FE81E1236B78' react-scripts start",
+        "build": "cross-env GENERATE_SOURCEMAP=false REACT_APP_PASSCODE_MD5='24C9E15E52AFC47C225B757E7BEE1F9D|7E58D63B60197CEB55A1C487989A3720|92877AF70A45FD6A2ED7FE81E1236B78' react-scripts build",
         "eject": "react-scripts eject"
     },
     "browserslist": {
