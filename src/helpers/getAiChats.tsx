@@ -6,7 +6,7 @@ import { asyncSleep } from "./asyncSleep";
 interface DataContent {
     optimize?: string;
     sql?: string;
-    list?: string;
+    listString?: string;
     summer?: string;
     echarts?: string;
 }
@@ -49,11 +49,11 @@ export const getAiChats = async (
                 const {status,content={
                     optimize:"",
                     sql:"",
-                    list:"[]",
+                    listString:"[]",
                     summer:"",
                     echarts:""
                 }}:Data = data
-                let param:DataContent = {}
+                let param:DataContent = {...content}
                 const text = content.optimize || ""
                 if(status === "optimize_generating"){
                     onChatMessage(text, false, {
@@ -65,9 +65,6 @@ export const getAiChats = async (
                         ...param
                     });
                 }
-                // if(status === "sql_generating·"){
-
-                // // }
                 if(status === "sql_complete"){
                     param.sql = content.sql
                     onChatMessage(text, false, {
@@ -75,7 +72,7 @@ export const getAiChats = async (
                     });
                 }
                 if(status === "list_complete"){
-                    param.list = content.list ? JSON.parse(content.list) : [];
+                    param.listString = content.listString ? JSON.parse(content.listString) : [];
                     onChatMessage(text, false, {
                         ...param,
                     });
@@ -89,18 +86,13 @@ export const getAiChats = async (
                         ...param,
                     });
                 }
-                // if(status === "echarts_generating"){
-                //     onChatMessage(text, false, {
-                //         echarts: content.echarts
-                //     });
-
-                // }
                 if(status === "echarts_complete"){
                     param.echarts = content.echarts;
                     onChatMessage(text, true, {
                         ...param,
                     });
                 }
+                console.log(param, "paraminit");
             };
 
             eventSource.onerror = function(err) {

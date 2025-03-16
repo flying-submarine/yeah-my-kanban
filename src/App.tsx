@@ -238,10 +238,10 @@ const App = () => {
             if (end) {
                 dispatch(updateAI({ ...ai, busy: false }));
             }
-            let prevParts = _sessions[chartId][_sessions[chartId].length - 1].parts;
-            if (prevParts === modelPlaceholder) {
-                prevParts = "";
-            }
+            // let prevParts = _sessions[chartId][_sessions[chartId].length - 1].parts;
+            // if (prevParts === modelPlaceholder) {
+            //     prevParts = "";
+            // }
             _sessions = {
                 ..._sessions,
                 [chartId]: [
@@ -250,8 +250,7 @@ const App = () => {
                         role: "model",
                         parts: `${message}`,
                         timestamp: Date.now(),
-                        // params: params
-
+                        params: params
                     },
                 ],
             };

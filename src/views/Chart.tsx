@@ -15,6 +15,7 @@ import { getAiContent } from "../helpers/getAiContent";
 import { GenerativeContentBlob } from "@google/generative-ai";
 import { getBase64BlobUrl } from "../helpers/getBase64BlobUrl";
 import { ImageView } from "../components/ImageView";
+import { BarChart } from "../components/BarChart";
 import { sendUserConfirm } from "../helpers/sendUserConfirm";
 import { sendUserAlert } from "../helpers/sendUserAlert";
 import { RouterComponentProps, routerConfig } from "../config/router";
@@ -206,7 +207,15 @@ const Chart = (props: RouterComponentProps) => {
     return (
         <Container className="max-w-[calc(100%)] py-5 pl-3 mb-auto mx-1 md:mx-[4rem] lg:mx-[8rem]">
             <ImageView>
-                {chat.map(({ role, parts, attachment, timestamp }, index) => {
+                {chat.map(({ role, parts, attachment, timestamp,params }, index) => {
+                    console.log(params,'params')
+                    let chartData;
+                    try {
+                        chartData = typeof params?.echarts === "string" ? JSON.parse(params.echarts) : params?.echarts;
+                    } catch (error) {
+                        console.error("Invalid JSON in params.echarts:", error);
+                        chartData = null;
+                    }
                     const { mimeType, data } = attachment ?? {
                         mimeType: "",
                         data: "",
@@ -289,6 +298,37 @@ const Chart = (props: RouterComponentProps) => {
                                     !!data.length ? attachmentPostscriptHtml : ""
                                 }`}
                             </Markdown>
+                            {/* {
+                                !!params?.sql && (
+                                    <div className="flex items-center space-x-2">
+                                        <p className="font-bold text-sm">SQL:</p>
+                                        <p className="text-sm">{params.sql}</p>
+                                    </div>
+                                )
+                            }
+                            {
+                                !!params?.listString && (
+                                    <div className="flex items-center space-x-2">
+                                        <p className="font-bold text-sm">List:</p>
+                                        <p className="text-sm">{params.listString}</p>
+                                    </div>
+                                )
+                            } */}
+                            {/* {
+                                !!params?.summer && (
+                                    <div className="flex items-center space-x-2">
+                                        <p className="font-bold text-sm">Summer:</p>
+                                        <p className="text-sm">{params.summer}</p>
+                                    </div>
+                                )
+                            } */}
+                            {
+                                !!chartData && (
+                                    <BarChart 
+                                        data={chartData} />
+                                  )
+                            }
+                            
                         </Session>
                     );
                 })}
