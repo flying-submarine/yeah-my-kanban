@@ -59,7 +59,8 @@ export const Header = (props: HeaderProps) => {
             <div className="flex">
                 <Link
                     className="hover:bg-gray-200 rounded-lg p-2"
-                    to={newChatUrl}
+                    to={location.pathname.includes('chart') ? '/chart' : 
+                        location.pathname.includes('video') ? '/video' : '/'}
                 >
                     <img src={newChatIcon} className="size-4" alt="" />
                 </Link>
