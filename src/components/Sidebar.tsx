@@ -48,6 +48,11 @@ export const Sidebar = (props: SidebarProps) => {
         onSwitchLocale(target.value);
     };
 
+
+    useEffect(() => {
+        handleSelectChange({ target: { value: "en-US" } } as React.ChangeEvent<HTMLSelectElement>);
+    }, []);
+
     const [renamingChatTitle, setRenamingChatTitle] = useState<{
         id: string;
         title: string;
