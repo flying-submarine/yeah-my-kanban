@@ -46,7 +46,7 @@ export const Header = (props: HeaderProps) => {
 
             <button className="rounded-lg p-2">
                 <select
-                    className="font-semibold text-lg border-0 rounded-lg p-1 outline-none focus:ring-0 focus:border-0 bg-white shadow-none appearance-none"
+                    className="font-semibold font text-sm border-0 rounded-lg p-1 outline-none focus:ring-0 focus:border-0 bg-white shadow-none appearance-none"
                     onChange={handleSelectChange}
                     disabled={busy}
                     value={defaultOptionValue} // 设置默认选中的值
