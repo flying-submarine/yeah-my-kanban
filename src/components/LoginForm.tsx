@@ -51,7 +51,7 @@ export const LoginForm = (props: LoginFormProps) => {
                     setLocalStorage("passcode", encodedPasscode, remember);
                 }
                 sendUserAlert(
-                    t("components.LoginForm.handleLogin.login_success")
+                    t("components.LoginForm.handleLogin.login_success"),false,500
                 );
                 // await asyncSleep(500);
                 onPasscodeCorrect();

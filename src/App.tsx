@@ -166,7 +166,7 @@ const App = () => {
             confirmText: t("App.handleLogout.confirm_button"),
             cancelText: t("App.handleLogout.cancel_button"),
             onConfirmed: () => {
-                sendUserAlert(t("App.handleLogout.on_confirmed"));
+                // sendUserAlert(t("App.handleLogout.on_confirmed"),false,500);
                 setHasLogined(false);
                 setLocalStorage("passcode", "", false);
             },
