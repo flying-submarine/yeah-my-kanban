@@ -361,7 +361,7 @@ const App = () => {
                     passcodes={passcodes}
                     onPasscodeCorrect={() =>{
                         setHasLogined(true)
-                        navigate(routes.index.prefix)
+                        !passcodes.length && navigate(routes.index.prefix)
                     }}
                 />
             )}

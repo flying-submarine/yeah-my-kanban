@@ -34,7 +34,6 @@ export const Header = (props: HeaderProps) => {
     // 根据当前路径决定下拉菜单的默认选项
     const defaultOptionValue = location.pathname.includes('govFineQuery') ? 'govFineQuery' : 
         location.pathname.includes('voiceAssistant') ? 'voiceAssistant' : '';
-    console.log('defaultOptionValue:', defaultOptionValue);
     return (
         <header className="z-10 sticky top-0 flex px-2 py-1 items-center justify-between border-b bg-white">
             <button
@@ -52,7 +51,7 @@ export const Header = (props: HeaderProps) => {
                     disabled={busy}
                     value={defaultOptionValue} // 设置默认选中的值
                 >
-                    <option value={`govFineQuery`}>🏛️ Gov-Fine Query</option>
+                    <option value={"govFineQuery"}>🏛️ Gov-Fine Query</option>
                     <option value="">👱 Personal-Info Query</option>
                     <option value="voiceAssistant">🤖 Voice Assistant</option>
                 </select>

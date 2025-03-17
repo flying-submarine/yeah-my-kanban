@@ -72,7 +72,7 @@
             },
             "setPlaceholderByWidth": {
                 "placeholder_for_pc": "Press Enter to send",
-                "placeholder_for_mobile": "Jusk ask here..."
+                "placeholder_for_mobile": "Jusk ask me..."
             }
         },
         "LoginForm": {
