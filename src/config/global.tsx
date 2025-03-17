@@ -32,10 +32,10 @@ export const globalConfig = {
     title: {
         site: !!env["REACT_APP_TITLE_SITE"]?.length
             ? env["REACT_APP_TITLE_SITE"]
-            : "TongYi",
+            : "DDA",
         header: !!env["REACT_APP_TITLE_HEADER"]?.length
             ? env["REACT_APP_TITLE_HEADER"]
-            : "TongYi",
+            : "DDA",
     },
     api: env["REACT_APP_GEMINI_API_URL"],
     sse: env["REACT_APP_GEMINI_API_SSE"] === "false" ? false : true,

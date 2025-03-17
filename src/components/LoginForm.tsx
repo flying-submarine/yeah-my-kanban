@@ -97,10 +97,10 @@ export const LoginForm = (props: LoginFormProps) => {
     return (
         <>
             <div className="flex items-center mb-8">
-                <img className="size-10 mr-2" src={logo} alt="" />
+                {/* <img className="size-10 mr-2" src={logo} alt="" />
                 <span className="text-3xl font-semibold text-gray-900">
                     {title}
-                </span>
+                </span> */}
             </div>
             <div className="w-full bg-gray-50 rounded-lg shadow-xl max-w-lg hover:scale-105 transition-all duration-700">
                 <div className="p-8 space-y-6">

@@ -1,5 +1,5 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import menuIcon from "../assets/icons/bars-staggered-solid.svg";
+import menuIcon from "../assets/logo.svg";
 import newChatIcon from "../assets/icons/square-plus-regular.svg";
 import purgeIcon from "../assets/icons/broom-ball-solid.svg";
 import LogoutIcon from "../assets/icons/right-from-bracket-solid.svg";
@@ -41,8 +41,8 @@ export const Header = (props: HeaderProps) => {
                 className="rounded-lg p-2"
                 // onClick={onToggleSidebar}
             >
-                {/* <img src={menuIcon} className="size-4" alt="" /> */}
-                <h1 className="font-semibold text-lg">{"DDA"}</h1>
+                <img src={menuIcon} className="w-[4rem] h-[3rem] size-16" alt="" />
+                {/* <h1 className="font-semibold text-lg">{"DDA"}</h1> */}
             </button>
             <button className="rounded-lg p-2">
                 <select
