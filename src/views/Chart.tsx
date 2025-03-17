@@ -270,7 +270,7 @@ const Chart = (props: RouterComponentProps) => {
                     return (
                         <Session
                             key={index}
-                            type={"chart"}
+                            type={"govFineQuery"}
                             index={index}
                             prompt={parts}
                             editState={editState}
@@ -298,7 +298,7 @@ const Chart = (props: RouterComponentProps) => {
                                     !!data.length ? attachmentPostscriptHtml : ""
                                 }`}
                             </Markdown>
-                            {/* {
+                            {
                                 !!params?.sql && (
                                     <div className="flex items-center space-x-2">
                                         <p className="font-bold text-sm">SQL:</p>
@@ -313,21 +313,22 @@ const Chart = (props: RouterComponentProps) => {
                                         <p className="text-sm">{params.listString}</p>
                                     </div>
                                 )
-                            } */}
-                            {/* {
+                            }
+                             {
+                                !!chartData && (
+                                    <BarChart 
+                                        data={chartData} />
+                                  )
+                            }
+                            {
                                 !!params?.summer && (
                                     <div className="flex items-center space-x-2">
                                         <p className="font-bold text-sm">Summer:</p>
                                         <p className="text-sm">{params.summer}</p>
                                     </div>
                                 )
-                            } */}
-                            {
-                                !!chartData && (
-                                    <BarChart 
-                                        data={chartData} />
-                                  )
                             }
+                           
                             
                         </Session>
                     );

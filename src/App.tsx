@@ -62,8 +62,8 @@ const App = () => {
 
     const matchUrl = () => {
         const routes = [
-            { path: '/chart/:id', label: 'chart' },
-            { path: '/chat/:id', label: 'chat' },
+            { path: '/govFineQuery/:id', label: 'govFineQuery' },
+            { path: '/chat/:id', label: 'Personal-Info Query' },
             { path: '/', label: 'chat' },
             { path: '/video', label: 'video' }
         ];
@@ -166,7 +166,7 @@ const App = () => {
             confirmText: t("App.handleLogout.confirm_button"),
             cancelText: t("App.handleLogout.cancel_button"),
             onConfirmed: () => {
-                // sendUserAlert(t("App.handleLogout.on_confirmed"),false,500);
+                sendUserAlert(t("App.handleLogout.on_confirmed"),false,500);
                 setHasLogined(false);
                 setLocalStorage("passcode", "", false);
             },
@@ -200,7 +200,7 @@ const App = () => {
             hash.replace("#", "") || pathname
         )?.params as { id: string }) ?? { id: Date.now().toString() };
 
-        const match = matchPath('/chart/:id', hash.replace("#", "") || pathname);
+        const match = matchPath('/govFineQuery/:id', hash.replace("#", "") || pathname);
 
         const chartId = match && match.params.id ? match.params.id : id;
         
@@ -232,7 +232,7 @@ const App = () => {
         dispatch(updateAI({ ...ai, busy: true }));
         dispatch(updateSessions(_sessions));
         if(chartId) currentSessionHistory = chartId in sessions ? sessions[chartId] : [];
-        !hash.includes("/chart") ? navigate(`${prefix}/${chartId}${suffix}`) : navigate(`/chart/${chartId}${suffix}`) ;
+        !hash.includes("/govFineQuery") ? navigate(`${prefix}/${chartId}${suffix}`) : navigate(`/govFineQuery/${chartId}${suffix}`) ;
 
         const handler = (message: string, end: boolean,params:Object) => {
             if (end) {
@@ -338,7 +338,7 @@ const App = () => {
                             minHeight={45}
                             ref={textAreaRef}
                             busy={ai.busy}
-                            isChart = {window.location.hash.includes("/chart") }
+                            isChart = {window.location.hash.includes("/govFineQuery") }
                             onSubmit={handleSubmit}
                             onUpload={handleUpload}
                         />

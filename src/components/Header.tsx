@@ -32,9 +32,9 @@ export const Header = (props: HeaderProps) => {
     };
 
     // 根据当前路径决定下拉菜单的默认选项
-    const defaultOptionValue = location.pathname.includes('chart') ? 'chart' : 
-        location.pathname.includes('video') ? 'video' : '';
-
+    const defaultOptionValue = location.pathname.includes('govFineQuery') ? 'govFineQuery' : 
+        location.pathname.includes('voiceAssistant') ? 'voiceAssistant' : '';
+    console.log('defaultOptionValue:', defaultOptionValue);
     return (
         <header className="z-10 sticky top-0 flex px-2 py-1 items-center justify-between border-b bg-white">
             <button
@@ -42,8 +42,9 @@ export const Header = (props: HeaderProps) => {
                 // onClick={onToggleSidebar}
             >
                 <img src={menuIcon} className="w-[4rem] h-[3rem] size-16" alt="" />
-                {/* <h1 className="font-semibold text-lg">{"DDA"}</h1> */}
             </button>
+            
+
             <button className="rounded-lg p-2">
                 <select
                     className="font-semibold text-lg border-0 rounded-lg p-1 outline-none focus:ring-0 focus:border-0 bg-white shadow-none appearance-none"
@@ -51,17 +52,17 @@ export const Header = (props: HeaderProps) => {
                     disabled={busy}
                     value={defaultOptionValue} // 设置默认选中的值
                 >
-                    <option value={`chart`}>Chart</option>
-                    <option value="">Chat</option>
-                    <option value="video">Video</option>
+                    <option value={`govFineQuery`}>🏛️ Gov-Fine Query</option>
+                    <option value="">👱 Personal-Info Query</option>
+                    <option value="voiceAssistant">🤖 Voice Assistant</option>
                 </select>
             </button>
             <div className="flex">
                 <Link
                     className="hover:bg-gray-200 rounded-lg p-2"
                     onClick={(e) => busy && e.preventDefault()} // 防止点击跳转
-                    to={location.pathname.includes('chart') ? '/chart' : 
-                        location.pathname.includes('video') ? '/video' : '/'}
+                    to={location.pathname.includes('govFineQuery') ? '/govFineQuery' : 
+                        location.pathname.includes('voiceAssistant') ? '/voiceAssistant' : '/'}
                 >
                     <img src={newChatIcon} className="size-4" alt="" />
                 </Link>
