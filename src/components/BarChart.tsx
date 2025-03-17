@@ -11,7 +11,7 @@ interface BarChartProps {
 }
 
 export const BarChart: React.FC<BarChartProps> = ({ data }) => {
-  console.log(data)
+  console.log(data,'BarChart')
   const options: EChartsOption = {
     xAxis: {
       type: "category",

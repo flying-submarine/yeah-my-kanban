@@ -53,35 +53,37 @@ export const getAiChats = async (
                     summer:"",
                     echarts:""
                 }}:Data = data
+                console.log(data, "data");
                 let param:DataContent = {...content}
-                const text = content.optimize || ""
-                if(status === "optimize_generating"){
-                    onChatMessage(text, false, {
-                        ...param
-                    });
-                }
-                if(status === "optimize_complete"){
-                    onChatMessage(text, false, {
-                        ...param
-                    });
-                }
-                if(status === "sql_complete"){
-                    param.sql = content.sql
-                    onChatMessage(text, false, {
-                        ...param
-                    });
-                }
-                if(status === "list_complete"){
-                    param.listString = content.listString ? JSON.parse(content.listString) : [];
-                    onChatMessage(text, false, {
-                        ...param,
-                    });
-                }
-                // if(status === "summer_generating"){
-                   
+                const text = content.summer || ""
+                // if(status === "optimize_generating"){
+                //     onChatMessage(text, false, {
+                //         ...param
+                //     });
                 // }
+                // if(status === "optimize_complete"){
+                //     onChatMessage(text, false, {
+                //         ...param
+                //     });
+                // }
+                // if(status === "sql_complete"){
+                //     param.sql = content.sql
+                //     onChatMessage(text, false, {
+                //         ...param
+                //     });
+                // }
+                // if(status === "list_complete"){
+                //     param.listString = content.listString ? JSON.parse(content.listString) : [];
+                //     onChatMessage(text, false, {
+                //         ...param,
+                //     });
+                // }
+                if(status === "summer_generating"){
+                    onChatMessage(text, false, {
+                        ...param
+                    });
+                }
                 if(status === "summer_complete"){
-                    param.summer = content.summer
                     onChatMessage(text, false, {
                         ...param,
                     });
@@ -92,7 +94,6 @@ export const getAiChats = async (
                         ...param,
                     });
                 }
-                console.log(param, "paraminit");
             };
 
             eventSource.onerror = function(err) {
