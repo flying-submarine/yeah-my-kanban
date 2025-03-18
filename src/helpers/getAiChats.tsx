@@ -50,7 +50,7 @@ export const getAiChats = async (
                                 false,
                                 { ...param }
                             );
-                            await asyncSleep(Math.random() * 300 + 300); // 模拟打字间隔
+                            await asyncSleep(Math.random() * 0 + 10); // 模拟打字间隔
                         }
                     } else {
                         onChatMessage(accumulatedText, false, { ...param });
