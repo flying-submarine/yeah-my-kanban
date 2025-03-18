@@ -21,125 +21,62 @@ export const getAiChats = async (
     prompts: string | Array<string | Part>,
     stream: boolean,
     options: BaseParams,
-    onChatMessage: (message: string, end: boolean,params:Object) => void
+    onChatMessage: (message: string, end: boolean, params: Object) => void
 ) => {
-    // const TypeWriterEffectThreshold = 30;
+    const TypeWriterEffectThreshold = 20; // 每次输出的字符数量
+    let accumulatedText = ''; // 用来拼接返回的文本
+
     try {
-        const attachmentIndexArr = history
-            .map(({ attachment }, index) =>
-                !!attachment?.data.length ? index : -1
-            )
-            .filter((item) => item !== -1);
-        // if (!!attachmentIndexArr.length) {
-        //     const indexArrStr = attachmentIndexArr.join(", ");
-        //     prompts += `\n\n---\n\nThis is a prompt appended automatically by the system: Please note that the user uploaded image(s) in the earlier conversation at index ${indexArrStr} and it was processed and answered by \`gemini-pro-vision\`, since you don't have the ability to recognize images, please try to find some useful information from the previous prompts and responses and answer the user's question accordingly, never tell the user you saw this appended prompt, and never tell the user that you don't know how to answer the question, just try to answer it as best as you can. Thanks!`;
-        // }
-
-        // const payload = history.map((item) => {
-        //     const { timestamp, attachment, ...rest } = item;
-        //     return rest;
-        // });
-
-        if (true) {
+        if (true) { // 保持使用 EventSource 流式获取数据
             const url = `/chat/bi/api/stream?content=${prompts}`;
             const eventSource = new EventSource(url);
 
-            eventSource.onmessage = function(event) {
+            eventSource.onmessage = async function (event) {
                 const data = JSON.parse(event.data);
-                const {status,content={
-                    optimize:"",
-                    sql:"",
-                    listString:"[]",
-                    summer:"",
-                    echarts:""
-                }}:Data = data
+                const { status, content = { optimize: "", sql: "", listString: "[]", summer: "", echarts: "" } }: Data = data;
+
                 console.log(data, "data");
-                let param:DataContent = {...content}
-                const text = content.summer || ""
-                if(status === "init"){
-                    onChatMessage(text, false, {
-                        ...param
-                    });
+
+                let param: DataContent = { ...content };
+                const text = content.summer || "";
+                accumulatedText += text;
+                // 模拟打字机效果：逐字输出
+                const outputText = async (accumulatedText: string) => {
+                    if (text.length > TypeWriterEffectThreshold) {
+                        const textArr = text.split("");
+                        for (let i = 0; i < textArr.length; i += TypeWriterEffectThreshold) {
+                            onChatMessage(
+                                textArr.slice(i, i + TypeWriterEffectThreshold).join(""),
+                                false,
+                                { ...param }
+                            );
+                            await asyncSleep(Math.random() * 300 + 300); // 模拟打字间隔
+                        }
+                    } else {
+                        onChatMessage(accumulatedText, false, { ...param });
+                    }
+                    onChatMessage("", true, { ...param }); // 结束标志
+                };
+
+                if (status === "init") {
+                    await outputText(accumulatedText);
                 }
-                // if(status === "optimize_generating"){
-                //     onChatMessage(text, false, {
-                //         ...param
-                //     });
-                // }
-                // if(status === "optimize_complete"){
-                //     onChatMessage(text, false, {
-                //         ...param
-                //     });
-                // }
-                // if(status === "sql_complete"){
-                //     param.sql = content.sql
-                //     onChatMessage(text, false, {
-                //         ...param
-                //     });
-                // }
-                // if(status === "list_complete"){
-                //     param.listString = content.listString ? JSON.parse(content.listString) : [];
-                //     onChatMessage(text, false, {
-                //         ...param,
-                //     });
-                // }
-                // if(status === "summer_generating"){
-                //     onChatMessage(text, false, {
-                //         ...param
-                //     });
-                // }
-                // if(status === "summer_complete"){
-                //     onChatMessage(text, false, {
-                //         ...param,
-                //     });
-                // }
-                onChatMessage(text, false, {
-                    ...param
-                });
-                if(status === "echarts_complete"){
+
+                // 其他状态处理（如有需要的话）
+                if (status === "echarts_complete") {
                     param.echarts = content.echarts;
-                    onChatMessage(text, true, {
-                        ...param,
-                    });
+                    await outputText(accumulatedText); // 输出最终结果
+                    // onChatMessage(accumulatedText, true, { ...param });
                 }
             };
 
-            eventSource.onerror = function(err) {
+            eventSource.onerror = function (err) {
                 console.error("EventSource failed:", err);
                 eventSource.close();
             };
-        } 
-        // else {
-        //     const chat = model.startChat({
-        //         ...options,
-        //         history: payload,
-        //     });
-        //     const result = await chat.sendMessage(prompts);
-        //     const response = result.response;
-        //     const text = response.text();
-        //     if (text.length > TypeWriterEffectThreshold) {
-        //         const textArr = text.split("");
-        //         for (
-        //             let i = 0;
-        //             i < textArr.length;
-        //             i += TypeWriterEffectThreshold
-        //         ) {
-        //             onChatMessage(
-        //                 textArr
-        //                     .slice(i, i + TypeWriterEffectThreshold)
-        //                     .join(""),
-        //                 false,
-        //                 {}
-        //             );
-        //             await asyncSleep(Math.random() * 600 + 300);
-        //         }
-        //     } else {
-        //         onChatMessage(text, false,{});
-        //     }
-        //     onChatMessage("", true,{});
-        // }
+        }
     } catch (e) {
         const err = e as any;
-        onChatMessage(err.message, true,{});
+        onChatMessage(err.message, true, {});
     }
 };

@@ -209,6 +209,7 @@ const App = () => {
             sendUserAlert(t("App.handleSubmit.invalid_session"), true);
             return;
         }
+        
         const modelPlaceholder = t("App.handleSubmit.model_placeholder");
         let currentSessionHistory = chartId in sessions ? sessions[chartId] : [];
         const currentTimestamp = Date.now();
@@ -218,6 +219,7 @@ const App = () => {
                 ...(sessions[chartId] || []),
                 {
                     role: "user",
+                    // parts: prompt,
                     parts: prompt,
                     timestamp: currentTimestamp,
                     attachment: uploadInlineData,
@@ -238,17 +240,17 @@ const App = () => {
             if (end) {
                 dispatch(updateAI({ ...ai, busy: false }));
             }
-            // let prevParts = _sessions[chartId][_sessions[chartId].length - 1].parts;
-            // if (prevParts === modelPlaceholder) {
-            //     prevParts = "";
-            // }
+            let prevParts = _sessions[chartId][_sessions[chartId].length - 1].parts;
+            if (prevParts === modelPlaceholder) {
+                prevParts = "";
+            }
             _sessions = {
                 ..._sessions,
                 [chartId]: [
                     ..._sessions[chartId].slice(0, -1),
                     {
                         role: "model",
-                        parts: `${message}`,
+                        parts: `${prevParts}${message}`,
                         timestamp: Date.now(),
                         params: params
                     },
