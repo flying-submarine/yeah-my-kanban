@@ -38,6 +38,7 @@ export const InputArea = forwardRef(
 
         const handleSubmit = () => {
             const { current } = textAreaRef;
+            if(current?.value.trim().length === 0) return;
             onSubmit(current!.value);
             current!.value = "";
             setTextAreaHeight(current, minHeight, maxHeight);

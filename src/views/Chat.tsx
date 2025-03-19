@@ -47,12 +47,6 @@ const Chat = (props: RouterComponentProps) => {
     const [attachmentsURL, setAttachmentsURL] = useState<
         Record<number, string>
     >({});
-    // const [pythonRuntime, setPythonRuntime] = useState<PyodideInterface | null>(
-    //     null
-    // );
-
-    // const handlePythonRuntimeCreated = (pyodide: PyodideInterface) =>
-    //     setPythonRuntime(pyodide);
 
     const scrollToBottom = useCallback(
         (force: boolean = false) =>
