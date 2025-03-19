@@ -174,16 +174,40 @@ const App = () => {
     };
 
     const handleUpload = async (file: File | null) => {
+        console.log(file, "file");
+        // const formData = new FormData();
+        // if (file) {
+        //     formData.append("file", file);
+        // }
+        // fetch('/file/upload', {
+        //     method: 'POST',
+        //     body: file
+        // }).then(response => {         
+        //     console.log(response, "response");
+        // }).catch(error => {
+        //     console.error('Error:', error);
+        //     }
+        // );
         if (file) {
             const base64EncodedData = await getBase64Img(file);
             const base64EncodedDataParts = base64EncodedData.split(",");
-            setUploadInlineData({
-                data: base64EncodedDataParts[base64EncodedDataParts.length - 1],
-                mimeType: file.type,
-            });
+            fetch('/file/upload', {
+                method: 'POST',
+                body: base64EncodedDataParts[base64EncodedDataParts.length - 1]
+            }).then(response => {         
+                console.log(response, "response");
+            }).catch(error => {
+                console.error('Error:', error);
+                }
+            );
+            // setUploadInlineData({
+            //     data: base64EncodedDataParts[base64EncodedDataParts.length - 1],
+            //     mimeType: file.type,
+            // });
         } else {
             setUploadInlineData({ data: "", mimeType: "" });
         }
+        
     };
 
     const handleSubmit = async (prompt: string) => {
