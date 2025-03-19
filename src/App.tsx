@@ -360,14 +360,14 @@ const App = () => {
                                 refs: { mainSectionRef, textAreaRef },
                             }}
                         />
-                        <InputArea
+                        {!window.location.hash.includes("/voiceAssistant") && <InputArea
                             minHeight={45}
                             ref={textAreaRef}
                             busy={ai.busy}
                             isChart = {window.location.hash.includes("/govFineQuery") }
                             onSubmit={handleSubmit}
                             onUpload={handleUpload}
-                        />
+                        />}
                         {!ai.busy && (
                             <PageScroller
                                 thresholds={{
