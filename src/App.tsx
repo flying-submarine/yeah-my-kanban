@@ -281,7 +281,7 @@ const App = () => {
         };
         if (!uploadInlineData.data.length) {
             await getAiChats(
-                !hash.includes("/govFineQuery") ? "chat" : "govFineQuery",
+                hash.includes("/govFineQuery") ?"govFineQuery" :  "personalInfoQuery" ,
                 currentSessionHistory,
                 prompt,
                 chartId,
@@ -290,7 +290,7 @@ const App = () => {
             );
         } else {
             await getAiContent(
-                !hash.includes("/govFineQuery") ? "chat" : "govFineQuery",
+                hash.includes("/govFineQuery") ?  "govFineQuery"  : "personalInfoQuery",
                 prompt,
                 fileId,
                 uploadInlineData,

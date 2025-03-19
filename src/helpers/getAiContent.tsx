@@ -25,72 +25,26 @@ export const getAiContent = async (
     const TypeWriterEffectThreshold = 30;
     try {
         let preUrl = "/chat/multi/api/stream"
-            if(type === "govFineQuery"){
-                preUrl = "/chat/bi/api/stream"
-            }
+            // if(type === "govFineQuery"){
+            //     preUrl = "/chat/bi/api/stream"
+            // }
             const url = `${preUrl}?content=${prompts}&fileId=${fileId}&userId=${'123'}&sessionId=${chartId}`;
             const eventSource = new EventSource(url);
 
             eventSource.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-                const {status,content={
-                    optimize:"",
-                    sql:"",
-                    listString:"[]",
-                    summer:"",
-                    echarts:""
-                }}:Data = data
+             
+                const {status,content} = data
                 console.log(data, "data");
-                let param:DataContent = {...content}
-                const text = content.summer || ""
-                if(status === "init"){
-                    onContentMessage(text, false, {
-                        ...param
-                    });
+                if(status === "generating"){
+                    onContentMessage(content, false, {});
                 }
-                // if(status === "optimize_generating"){
-                //     onChatMessage(text, false, {
-                //         ...param
-                //     });
-                // }
-                // if(status === "optimize_complete"){
-                //     onChatMessage(text, false, {
-                //         ...param
-                //     });
-                // }
-                // if(status === "sql_complete"){
-                //     param.sql = content.sql
-                //     onChatMessage(text, false, {
-                //         ...param
-                //     });
-                // }
-                // if(status === "list_complete"){
-                //     param.listString = content.listString ? JSON.parse(content.listString) : [];
-                //     onChatMessage(text, false, {
-                //         ...param,
-                //     });
-                // }
-                // if(status === "summer_generating"){
-                //     onChatMessage(text, false, {
-                //         ...param
-                //     });
-                // }
-                // if(status === "summer_complete"){
-                //     onChatMessage(text, false, {
-                //         ...param,
-                //     });
-                // }
-                onContentMessage(text, false, {
-                    ...param
-                });
-                if(status === "echarts_complete"){
-                    param.echarts = content.echarts;
-                    onContentMessage(text, true, {
-                        ...param,
-                    });
+             
+                onContentMessage(content, false, {});
+                if(status === "complete"){
+                    onContentMessage(content, true, {});
                 }
             };
-
             eventSource.onerror = function(err) {
                 console.error("EventSource failed:", err);
                 eventSource.close();

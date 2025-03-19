@@ -40,11 +40,34 @@ export const getAiChats = async (
         //     return rest;
         // });
 
-        if (true) {
+        if (type === "personalInfoQuery") {
             let preUrl = "/chat/multi/api/stream"
-            if(type === "govFineQuery"){
-                preUrl = "/chat/bi/api/stream"
-            }
+           
+            const url = `${preUrl}?content=${prompts}&userId=${'777'}&sessionId=${chartId}`;
+            const eventSource = new EventSource(url);
+
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+             
+                const {status,content} = data
+                console.log(data, "data");
+                if(status === "generating"){
+                    onChatMessage(content, false, {});
+                }
+             
+                onChatMessage(content, false, {});
+                if(status === "complete"){
+                    onChatMessage(content, true, {});
+                }
+            };
+            eventSource.onerror = function(err) {
+                console.error("EventSource failed:", err);
+                eventSource.close();
+            };
+        } 
+        else {
+            let  preUrl = "/chat/bi/api/stream"
+
             const url = `${preUrl}?content=${prompts}&userId=${'777'}&sessionId=${chartId}`;
             const eventSource = new EventSource(url);
 
@@ -112,36 +135,7 @@ export const getAiChats = async (
                 console.error("EventSource failed:", err);
                 eventSource.close();
             };
-        } 
-        // else {
-        //     const chat = model.startChat({
-        //         ...options,
-        //         history: payload,
-        //     });
-        //     const result = await chat.sendMessage(prompts);
-        //     const response = result.response;
-        //     const text = response.text();
-        //     if (text.length > TypeWriterEffectThreshold) {
-        //         const textArr = text.split("");
-        //         for (
-        //             let i = 0;
-        //             i < textArr.length;
-        //             i += TypeWriterEffectThreshold
-        //         ) {
-        //             onChatMessage(
-        //                 textArr
-        //                     .slice(i, i + TypeWriterEffectThreshold)
-        //                     .join(""),
-        //                 false,
-        //                 {}
-        //             );
-        //             await asyncSleep(Math.random() * 600 + 300);
-        //         }
-        //     } else {
-        //         onChatMessage(text, false,{});
-        //     }
-        //     onChatMessage("", true,{});
-        // }
+        }
     } catch (e) {
         const err = e as any;
         onChatMessage(err.message, true,{});
