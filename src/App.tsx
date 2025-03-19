@@ -51,8 +51,9 @@ const App = () => {
 
     const [currentLocale, setCurrentLocale] = useState(fallback);
     const [hasLogined, setHasLogined] = useState(false);
+    const [fileId, setFileId] = useState("");
     const [uploadInlineData, setUploadInlineData] =
-        useState<GenerativeContentBlob>({ data: "", mimeType: "" });
+        useState<GenerativeContentBlob>({ data: "", mimeType: ""});
     const [sidebarExpand, setSidebarExpand] = useState(false && window.innerWidth > 768);
 
     const setCurrentLocaleToState = async () =>
@@ -174,29 +175,29 @@ const App = () => {
     };
 
     const handleUpload = async (file: File | null) => {
-        console.log(file, "file");
-        // const formData = new FormData();
-        // if (file) {
-        //     formData.append("file", file);
-        // }
-        // fetch('/file/upload', {
-        //     method: 'POST',
-        //     body: file
-        // }).then(response => {         
-        //     console.log(response, "response");
-        // }).catch(error => {
-        //     console.error('Error:', error);
-        //     }
-        // );
         if (file) {
+            const base64EncodedData = await getBase64Img(file);
+            const base64EncodedDataParts = base64EncodedData.split(",");
+            
             const formData = new FormData();
             formData.append('file', file); // 'file' 是服务器端用来接收文件的字段名
         
             fetch('/file/upload', {
                 method: 'POST',
                 body: formData,
-            }).then(response => {         
-                console.log(response, "response");
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json(); // 假设服务器返回的是JSON数据
+            })
+            .then(data => {         
+                console.log(data.data, "respondatase");
+                setUploadInlineData({
+                    data: base64EncodedDataParts[base64EncodedDataParts.length - 1],
+                    mimeType: file.type,
+                });
+                setFileId(data.data);
             }).catch(error => {
                 console.error('Error:', error);
             });
@@ -280,19 +281,20 @@ const App = () => {
         };
         if (!uploadInlineData.data.length) {
             await getAiChats(
-                ai.model.pro,
+                !hash.includes("/govFineQuery") ? "chat" : "govFineQuery",
                 currentSessionHistory,
                 prompt,
-                sse,
+                chartId,
                 modelConfig,
                 handler
             );
         } else {
             await getAiContent(
-                ai.model.vision,
+                !hash.includes("/govFineQuery") ? "chat" : "govFineQuery",
                 prompt,
+                fileId,
                 uploadInlineData,
-                sse,
+                chartId,
                 handler
             );
         }

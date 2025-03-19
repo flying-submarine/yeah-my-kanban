@@ -104,23 +104,23 @@ const Chat = (props: RouterComponentProps) => {
                 dispatch(updateSessions(_sessions));
             };
             if (!_sessions[id][index - 1].attachment?.data.length) {
-                await getAiChats(
-                    ai.model.pro,
-                    _sessions[id].slice(0, index - 1),
-                    _sessions[id][index - 1].parts,
-                    globalConfig.sse,
-                    modelConfig,
-                    handler
-                );
+                // await getAiChats(
+                //     ai.model.pro,\
+                //     _sessions[id].slice(0, index - 1),
+                //     _sessions[id][index - 1].parts,
+                //     id,
+                //     modelConfig,
+                //     handler
+                // );
             } else {
-                await getAiContent(
-                    ai.model.vision,
-                    _sessions[id][index - 1].parts,
-                    _sessions[id][index - 1]
-                        .attachment as GenerativeContentBlob,
-                    globalConfig.sse,
-                    handler
-                );
+                // await getAiContent(
+                //     ai.model.vision,
+                //     _sessions[id][index - 1].parts,
+                //     _sessions[id][index - 1]
+                //         .attachment as GenerativeContentBlob,
+                //     globalConfig.sse,
+                //     handler
+                // );
             }
         } else if (ai.busy) {
             sendUserAlert(t("views.Chat.handleRefresh.not_available"), true);

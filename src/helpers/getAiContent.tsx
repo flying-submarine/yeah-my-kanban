@@ -1,70 +1,100 @@
 import { GenerativeContentBlob, GenerativeModel } from "@google/generative-ai";
 import { asyncSleep } from "./asyncSleep";
 
+interface DataContent {
+    optimize?: string;
+    sql?: string;
+    listString?: string;
+    summer?: string;
+    echarts?: string;
+}
+
+interface Data {
+    status: string;
+    content?: DataContent;
+}
 export const getAiContent = async (
-    model: GenerativeModel,
+    type: string,
     prompts: string,
+    fileId: string,
     inlineData: GenerativeContentBlob,
-    stream: boolean,
+    chartId: string,
     onContentMessage: (message: string, end: boolean,params:Object) => void
 ) => {
+    
     const TypeWriterEffectThreshold = 30;
     try {
-        if (stream) {
-            const result = await model.generateContentStream([
-                prompts,
-                { inlineData },
-            ]);
-            for await (const chunk of result.stream) {
-                const chunkText = chunk.text();
-                if (chunkText.length > TypeWriterEffectThreshold) {
-                    const chunkTextArr = chunkText.split("");
-                    for (
-                        let i = 0;
-                        i < chunkTextArr.length;
-                        i += TypeWriterEffectThreshold
-                    ) {
-                        onContentMessage(
-                            chunkTextArr
-                                .slice(i, i + TypeWriterEffectThreshold)
-                                .join(""),
-                            false,{}
-                        );
-                        await asyncSleep(Math.random() * 600 + 300);
-                    }
-                } else {
-                    onContentMessage(chunkText, false,{});
-                }
+        let preUrl = "/chat/multi/api/stream"
+            if(type === "govFineQuery"){
+                preUrl = "/chat/bi/api/stream"
             }
-            onContentMessage("", true,{});
-        } else {
-            const result = await model.generateContent([
-                prompts,
-                { inlineData },
-            ]);
-            const response = result.response;
-            const text = response.text();
-            if (text.length > TypeWriterEffectThreshold) {
-                const textArr = text.split("");
-                for (
-                    let i = 0;
-                    i < textArr.length;
-                    i += TypeWriterEffectThreshold
-                ) {
-                    onContentMessage(
-                        textArr
-                            .slice(i, i + TypeWriterEffectThreshold)
-                            .join(""),
-                        false,
-                        {}
-                    );
-                    await asyncSleep(Math.random() * 600 + 300);
+            const url = `${preUrl}?content=${prompts}&fileId=${fileId}&userId=${'123'}&sessionId=${chartId}`;
+            const eventSource = new EventSource(url);
+
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                const {status,content={
+                    optimize:"",
+                    sql:"",
+                    listString:"[]",
+                    summer:"",
+                    echarts:""
+                }}:Data = data
+                console.log(data, "data");
+                let param:DataContent = {...content}
+                const text = content.summer || ""
+                if(status === "init"){
+                    onContentMessage(text, false, {
+                        ...param
+                    });
                 }
-            } else {
-                onContentMessage(text, false,{});
-            }
-            onContentMessage("", true,{});
-        }
+                // if(status === "optimize_generating"){
+                //     onChatMessage(text, false, {
+                //         ...param
+                //     });
+                // }
+                // if(status === "optimize_complete"){
+                //     onChatMessage(text, false, {
+                //         ...param
+                //     });
+                // }
+                // if(status === "sql_complete"){
+                //     param.sql = content.sql
+                //     onChatMessage(text, false, {
+                //         ...param
+                //     });
+                // }
+                // if(status === "list_complete"){
+                //     param.listString = content.listString ? JSON.parse(content.listString) : [];
+                //     onChatMessage(text, false, {
+                //         ...param,
+                //     });
+                // }
+                // if(status === "summer_generating"){
+                //     onChatMessage(text, false, {
+                //         ...param
+                //     });
+                // }
+                // if(status === "summer_complete"){
+                //     onChatMessage(text, false, {
+                //         ...param,
+                //     });
+                // }
+                onContentMessage(text, false, {
+                    ...param
+                });
+                if(status === "echarts_complete"){
+                    param.echarts = content.echarts;
+                    onContentMessage(text, true, {
+                        ...param,
+                    });
+                }
+            };
+
+            eventSource.onerror = function(err) {
+                console.error("EventSource failed:", err);
+                eventSource.close();
+            };
     } catch (e) {
         const err = e as any;
         onContentMessage(err.message, true,{});

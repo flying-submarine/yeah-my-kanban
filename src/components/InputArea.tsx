@@ -141,6 +141,16 @@ export const InputArea = forwardRef(
 
         return (
             <div className="sticky bottom-0 flex flex-col p-4 bg-white space-y-2 max-h-48">
+                {!!attachmentName.length && (
+                    <div className="text-center text-gray-500 text-xs truncate">
+                        <img
+                            className="inline-block size-3 mr-0.5"
+                            src={attachmentIcon}
+                            alt=""
+                        />
+                        {attachmentName}
+                    </div>
+                )}
                 <div className="flex justify-center items-center gap-2">
                     <input
                         type="file"
@@ -247,16 +257,7 @@ export const InputArea = forwardRef(
                         />
                     </button>
                 </div>
-                {!!attachmentName.length && (
-                    <div className="text-center text-gray-500 text-xs truncate">
-                        <img
-                            className="inline-block size-3 mr-0.5"
-                            src={attachmentIcon}
-                            alt=""
-                        />
-                        {attachmentName}
-                    </div>
-                )}
+                
             </div>
         );
     }

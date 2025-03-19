@@ -16,10 +16,10 @@ interface Data {
     content?: DataContent;
 }
 export const getAiChats = async (
-    model: GenerativeModel,
+    type: string,
     history: SessionHistory[],
     prompts: string | Array<string | Part>,
-    stream: boolean,
+    chartId: string,
     options: BaseParams,
     onChatMessage: (message: string, end: boolean,params:Object) => void
 ) => {
@@ -41,7 +41,11 @@ export const getAiChats = async (
         // });
 
         if (true) {
-            const url = `/chat/bi/api/stream?content=${prompts}`;
+            let preUrl = "/chat/multi/api/stream"
+            if(type === "govFineQuery"){
+                preUrl = "/chat/bi/api/stream"
+            }
+            const url = `${preUrl}?content=${prompts}&userId=${'777'}&sessionId=${chartId}`;
             const eventSource = new EventSource(url);
 
             eventSource.onmessage = function(event) {
