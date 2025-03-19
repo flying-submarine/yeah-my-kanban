@@ -19,7 +19,6 @@ import { BarChart } from "../components/BarChart";
 import { sendUserConfirm } from "../helpers/sendUserConfirm";
 import { sendUserAlert } from "../helpers/sendUserAlert";
 import { RouterComponentProps, routerConfig } from "../config/router";
-// import { PyodideInterface } from "pyodide";
 import { useTranslation } from "react-i18next";
 
 const Chart = (props: RouterComponentProps) => {
@@ -180,14 +179,7 @@ const Chart = (props: RouterComponentProps) => {
     useEffect(() => {
         if (id && id in sessions) {
             setChat([...sessions[id]]);
-            let sessionTitle = sessions[id][0].title ?? sessions[id][0].parts;
-            if (sessionTitle.length > 20) {
-                sessionTitle = `${sessionTitle.substring(0, 20)} ...`;
-            }
-            // document.title = `${sessionTitle} | ${siteTitle}`;
-            document.title = siteTitle;
         } else {
-            document.title = siteTitle;
             setChat([
                 { role: "model", parts: invalidPlaceholder, timestamp: 0 },
             ]);
