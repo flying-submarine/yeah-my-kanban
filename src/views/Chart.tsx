@@ -187,32 +187,6 @@ const Chart = (props: RouterComponentProps) => {
                         }));
                     }
                     let attachmentPostscriptHtml = "";
-
-                    if (mimeType.startsWith("image/")) {
-                        attachmentPostscriptHtml = `
-                            <a data-image-view="gallery" href="${base64BlobURL}">
-                                <img src="${base64BlobURL}" style="
-                                    max-width: 10rem;
-                                    margin-top: 0;
-                                    margin-bottom: 0.2rem;
-                                    border-radius: 0.25rem;
-                                " alt="" />
-                            </a>
-                            <span class="text-xs text-gray-400">
-                                ${viewAttachment}
-                            </span>
-                        `;
-                    } else if (mimeType.startsWith("video/")) {
-                        attachmentPostscriptHtml = `
-                        <div class="flex border border-gray-300 rounded-md p-2 w-full max-w-[10rem] max-w-sm sm:p-1 sm:max-w-xs">
-                            <div class="w-1/3 bg-gray-300 mr-2 sm:mr-1"></div>
-                            <div class="flex flex-col space-y-0.5">
-                                <p class="font-bold m-0">Video</p>
-                                <p class="m-0">file</p>
-                            </div>
-                        </div>
-                    `;
-                    }
                     const typingEffect = `<div class="inline px-1 bg-gray-900 animate-pulse animate-duration-700"></div>`;
                     if (
                         ai.busy &&
@@ -237,52 +211,17 @@ const Chart = (props: RouterComponentProps) => {
                             }
                         >
                             <Markdown
-                                // typingEffect={typingEffect}
-                                // pythonRuntime={pythonRuntime}
-                                // onPythonRuntimeCreated={
-                                //     handlePythonRuntimeCreated
-                                // }
-                                // pythonRepoUrl={`${
-                                //     mode === "hash"
-                                //         ? window.location.pathname
-                                //         : basename
-                                // }pyodide`}
                             >
                                 {`${parts}${
                                     !!data.length ? attachmentPostscriptHtml : ""
                                 }`}
                             </Markdown>
-                            {/* {
-                                !!params?.sql && (
-                                    <div className="flex items-center space-x-2">
-                                        <p className="font-bold text-sm">SQL:</p>
-                                        <p className="text-sm">{params.sql}</p>
-                                    </div>
-                                )
-                            }
-                            {
-                                !!params?.listString && (
-                                    <div className="flex items-center space-x-2">
-                                        <p className="font-bold text-sm">List:</p>
-                                        <p className="text-sm">{params.listString}</p>
-                                    </div>
-                                )
-                            } */}
                              {
                                 !!chartData && (
                                     <BarChart 
                                         data={chartData} />
                                   )
                             }
-                            {/* {
-                                !!params?.summer && (
-                                    <div className="flex items-center space-x-2">
-                                        <p className="font-bold text-sm">Summer:</p>
-                                        <p className="text-sm">{params.summer}</p>
-                                    </div>
-                                )
-                            } */}
-                            
                         </Session>
                     );
                 })}
