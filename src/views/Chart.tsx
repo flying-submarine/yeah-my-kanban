@@ -48,23 +48,6 @@ const Chart = (props: RouterComponentProps) => {
         Record<number, string>
     >({});
 
-    // const [pythonRuntime, setPythonRuntime] = useState<PyodideInterface | null>(
-    //     null
-    // );
-
-    // const handlePythonRuntimeCreated = (pyodide: PyodideInterface) =>
-    //     setPythonRuntime(pyodide);
-
-    const scrollToBottom = useCallback(
-        (force: boolean = false) =>
-            (ai.busy || force) &&
-            mainSectionRef?.scrollTo({
-                top: mainSectionRef.scrollHeight,
-                behavior: "smooth",
-            }),
-        [ai, mainSectionRef]
-    );
-
     const handleRefresh = async (index: number, customSessions?: Sessions) => {
         const finalSessions = customSessions ?? sessions;
         if (!ai.busy && id && id in finalSessions) {
@@ -175,28 +158,11 @@ const Chart = (props: RouterComponentProps) => {
             sendUserAlert(t("views.Chat.handleDelete.not_available"), true);
         }
     };
-
-    useEffect(() => {
-        if (id && id in sessions) {
-            setChat([...sessions[id]]);
-        } else {
-            setChat([
-                { role: "model", parts: invalidPlaceholder, timestamp: 0 },
-            ]);
-        }
-        setTimeout(() => scrollToBottom(true), 300);
-    }, [t, siteTitle, id, sessions, mainSectionRef, scrollToBottom]);
-
-
-    useEffect(() => {
-        console.log(chat, "chat updated");
-    }, [chat]);
-
     return (
         <Container className="max-w-[calc(100%)] py-5 pl-3 mb-auto mx-1 md:mx-[4rem] lg:mx-[8rem]">
             <ImageView>
-                {chat.map(({ role, parts, attachment, timestamp,params }, index) => {
-                    console.log(params,'params')
+                { !!id && sessions[id].map(({ role, parts, attachment, timestamp,params }, index) => {
+                    console.log(parts ,'partsparts')
                     let chartData;
                     try {
                         chartData = typeof params?.echarts === "string" ? JSON.parse(params.echarts) : params?.echarts;

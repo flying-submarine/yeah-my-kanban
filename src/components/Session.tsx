@@ -56,6 +56,7 @@ export const Session = (props: SessionProps) => {
         onDelete,
         onRefresh,
     } = props;
+    console.log("Session prompt", prompt);
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
