@@ -92,7 +92,7 @@ export const LoginForm = (props: LoginFormProps) => {
                 setLocalStorage("passcode", "", false);
             }
         });
-    }, [checkHasLoggedIn, onPasscodeCorrect]);
+    }, [t,checkHasLoggedIn, onPasscodeCorrect]);
 
     return (
         <>
