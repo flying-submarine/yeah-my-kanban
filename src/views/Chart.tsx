@@ -19,7 +19,7 @@ import { BarChart } from "../components/BarChart";
 import { sendUserConfirm } from "../helpers/sendUserConfirm";
 import { sendUserAlert } from "../helpers/sendUserAlert";
 import { RouterComponentProps, routerConfig } from "../config/router";
-import { PyodideInterface } from "pyodide";
+// import { PyodideInterface } from "pyodide";
 import { useTranslation } from "react-i18next";
 
 const Chart = (props: RouterComponentProps) => {
@@ -49,12 +49,12 @@ const Chart = (props: RouterComponentProps) => {
         Record<number, string>
     >({});
 
-    const [pythonRuntime, setPythonRuntime] = useState<PyodideInterface | null>(
-        null
-    );
+    // const [pythonRuntime, setPythonRuntime] = useState<PyodideInterface | null>(
+    //     null
+    // );
 
-    const handlePythonRuntimeCreated = (pyodide: PyodideInterface) =>
-        setPythonRuntime(pyodide);
+    // const handlePythonRuntimeCreated = (pyodide: PyodideInterface) =>
+    //     setPythonRuntime(pyodide);
 
     const scrollToBottom = useCallback(
         (force: boolean = false) =>
