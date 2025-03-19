@@ -41,7 +41,7 @@ export const getAiChats = async (
         // });
 
         if (type === "personalInfoQuery") {
-            let preUrl = "/chat/multi/api/stream"
+            let preUrl = "/dda/chat/multi/api/stream"
            
             const url = `${preUrl}?content=${prompts}&userId=${'777'}&sessionId=${chartId}`;
             const eventSource = new EventSource(url);
@@ -66,7 +66,7 @@ export const getAiChats = async (
             };
         } 
         else {
-            let  preUrl = "/chat/bi/api/stream"
+            let  preUrl = "/dda/chat/bi/api/stream"
 
             const url = `${preUrl}?content=${prompts}&userId=${'777'}&sessionId=${chartId}`;
             const eventSource = new EventSource(url);

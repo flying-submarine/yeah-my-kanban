@@ -24,7 +24,7 @@ export const getAiContent = async (
     
     const TypeWriterEffectThreshold = 30;
     try {
-        let preUrl = "/chat/multi/api/stream"
+        let preUrl = "/dda/chat/multi/api/stream"
           
             const url = `${preUrl}?content=${prompts}&fileId=${fileId}&userId=${'123'}&sessionId=${chartId}`;
             const eventSource = new EventSource(url);
