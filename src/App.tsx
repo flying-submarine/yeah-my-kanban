@@ -189,22 +189,19 @@ const App = () => {
         //     }
         // );
         if (file) {
-            const base64EncodedData = await getBase64Img(file);
-            const base64EncodedDataParts = base64EncodedData.split(",");
+            const formData = new FormData();
+            formData.append('file', file); // 'file' 是服务器端用来接收文件的字段名
+        
             fetch('/file/upload', {
                 method: 'POST',
-                body: base64EncodedDataParts[base64EncodedDataParts.length - 1]
+                body: formData,
             }).then(response => {         
                 console.log(response, "response");
             }).catch(error => {
                 console.error('Error:', error);
-                }
-            );
-            // setUploadInlineData({
-            //     data: base64EncodedDataParts[base64EncodedDataParts.length - 1],
-            //     mimeType: file.type,
-            // });
+            });
         } else {
+            // 如果没有选择文件，则根据需要设置默认值或执行其他操作
             setUploadInlineData({ data: "", mimeType: "" });
         }
         
