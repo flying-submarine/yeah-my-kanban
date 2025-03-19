@@ -175,18 +175,19 @@ const App = () => {
     };
 
     const handleUpload = async (file: File | null) => {
-        if (file) {
+        if (file && !ai.busy ) {
             const base64EncodedData = await getBase64Img(file);
             const base64EncodedDataParts = base64EncodedData.split(",");
             
             const formData = new FormData();
             formData.append('file', file); // 'file' 是服务器端用来接收文件的字段名
         
-            fetch('/file/upload', {
+            fetch('/dda/file/upload', {
                 method: 'POST',
                 body: formData,
             }).then(response => {
                 if (!response.ok) {
+                    setUploadInlineData({ data: "", mimeType: "" });
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
                 return response.json(); // 假设服务器返回的是JSON数据
@@ -199,6 +200,7 @@ const App = () => {
                 });
                 setFileId(data.data);
             }).catch(error => {
+                setUploadInlineData({ data: "", mimeType: "" });
                 console.error('Error:', error);
             });
         } else {
@@ -299,6 +301,7 @@ const App = () => {
             );
         }
         setUploadInlineData({ data: "", mimeType: "" });
+        // setFileId('')
     };
 
     useEffect(() => {
