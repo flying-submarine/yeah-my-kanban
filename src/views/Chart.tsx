@@ -158,6 +158,18 @@ const Chart = (props: RouterComponentProps) => {
             sendUserAlert(t("views.Chat.handleDelete.not_available"), true);
         }
     };
+    const scrollToBottom = useCallback(
+        (force: boolean = false) =>
+            (ai.busy || force) &&
+            mainSectionRef?.scrollTo({
+                top: mainSectionRef.scrollHeight,
+                behavior: "smooth",
+            }),
+        [ai, mainSectionRef]
+    );
+    useEffect(() => {
+        setTimeout(() => scrollToBottom(true), 300);
+    }, [mainSectionRef, scrollToBottom]);
     return (
         <Container className="max-w-[calc(100%)] py-5 pl-3 mb-auto mx-1 md:mx-[4rem] lg:mx-[8rem]">
             <ImageView>
@@ -169,24 +181,7 @@ const Chart = (props: RouterComponentProps) => {
                     } catch (error) {
                         console.error("Invalid JSON in params.echarts:", error);
                         chartData = null;
-                    }
-                    const { mimeType, data } = attachment ?? {
-                        mimeType: "",
-                        data: "",
-                    };
-                    let base64BlobURL = "";
-                    if (!!data.length && timestamp in attachmentsURL) {
-                        base64BlobURL = attachmentsURL[timestamp];
-                    } else if (!!data.length) {
-                        base64BlobURL = getBase64BlobUrl(
-                            `data:${mimeType};base64,${data}`
-                        );
-                        setAttachmentsURL((prev) => ({
-                            ...prev,
-                            [timestamp]: base64BlobURL,
-                        }));
-                    }
-                    let attachmentPostscriptHtml = "";
+                    }                    
                     const typingEffect = `<div class="inline px-1 bg-gray-900 animate-pulse animate-duration-700"></div>`;
                     if (
                         ai.busy &&
@@ -206,15 +201,11 @@ const Chart = (props: RouterComponentProps) => {
                             onRefresh={handleRefresh}
                             onDelete={handleDelete}
                             onEdit={handleEdit}
-                            postscript={
-                                !!data.length ? attachmentPostscriptHtml : ""
-                            }
+                            postscript={''}
                         >
                             <Markdown
                             >
-                                {`${parts}${
-                                    !!data.length ? attachmentPostscriptHtml : ""
-                                }`}
+                                {parts}
                             </Markdown>
                              {
                                 !!chartData && (

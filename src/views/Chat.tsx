@@ -179,26 +179,13 @@ const Chat = (props: RouterComponentProps) => {
     };
 
     useEffect(() => {
-        if (id && id in sessions) {
-            setChat(sessions[id]);
-            let sessionTitle = sessions[id][0].title ?? sessions[id][0].parts;
-            if (sessionTitle.length > 20) {
-                sessionTitle = `${sessionTitle.substring(0, 20)} ...`;
-            }
-            document.title = `${sessionTitle} | ${siteTitle}`;
-        } else {
-            document.title = siteTitle;
-            setChat([
-                { role: "model", parts: invalidPlaceholder, timestamp: 0 },
-            ]);
-        }
         setTimeout(() => scrollToBottom(true), 300);
-    }, [t, siteTitle, id, sessions, mainSectionRef, scrollToBottom]);
+    }, [t,sessions, mainSectionRef, scrollToBottom]);
 
     return (
         <Container className="max-w-[calc(100%)] py-5 pl-3 mb-auto mx-1 md:mx-[4rem] lg:mx-[8rem]">
             <ImageView>
-                {chat.map(({ role, parts, attachment, timestamp }, index) => {
+                {!!id && sessions[id].map(({ role, parts, attachment, timestamp }, index) => {
                     const { mimeType, data } = attachment ?? {
                         mimeType: "",
                         data: "",
@@ -266,16 +253,6 @@ const Chat = (props: RouterComponentProps) => {
                             }
                         >
                             <Markdown
-                                // typingEffect={typingEffect}
-                                // pythonRuntime={pythonRuntime}
-                                // onPythonRuntimeCreated={
-                                //     handlePythonRuntimeCreated
-                                // }
-                                // pythonRepoUrl={`${
-                                //     mode === "hash"
-                                //         ? window.location.pathname
-                                //         : basename
-                                // }pyodide`}
                             >
                                 {`${parts}${
                                     !!data.length ? attachmentPostscriptHtml : ""
