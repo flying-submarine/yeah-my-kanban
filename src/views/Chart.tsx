@@ -15,13 +15,13 @@ import { getAiContent } from "../helpers/getAiContent";
 import { GenerativeContentBlob } from "@google/generative-ai";
 import { getBase64BlobUrl } from "../helpers/getBase64BlobUrl";
 import { ImageView } from "../components/ImageView";
-import { BarChart } from "../components/BarChart";
+import { Chart } from "../components/Chart";
 import { sendUserConfirm } from "../helpers/sendUserConfirm";
 import { sendUserAlert } from "../helpers/sendUserAlert";
 import { RouterComponentProps, routerConfig } from "../config/router";
 import { useTranslation } from "react-i18next";
 
-const Chart = (props: RouterComponentProps) => {
+const ChartPage = (props: RouterComponentProps) => {
     const { t } = useTranslation();
     const viewAttachment = t("views.Chat.view_attachment");
     const refreshPlaceholder = t("views.Chat.refresh_placeholder");
@@ -209,7 +209,7 @@ const Chart = (props: RouterComponentProps) => {
                             </Markdown>
                              {
                                 !!chartData && (
-                                    <BarChart 
+                                    <Chart 
                                         data={chartData} />
                                   )
                             }
@@ -221,4 +221,4 @@ const Chart = (props: RouterComponentProps) => {
     );
 };
 
-export default Chart;
+export default ChartPage;

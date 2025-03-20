@@ -80,7 +80,7 @@ export const getAiChats = async (
                 onChatMessage(text, false, {
                     ...param
                 });
-                if(status === "echarts_complete"){
+                if(status === "total_complete"){
                     param.echarts = content.echarts;
                     onChatMessage(text, true, {
                         ...param,

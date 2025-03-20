@@ -17,7 +17,7 @@ const AICallUIComponent = () => {
         new window.ARTCAICallUI({
           userId: '123',                          // 进入rtc的用户id，建议使用业务的登录用户id
           root: rootDiv.current,                  // 页面渲染到的节点，画面完整填充整个区域
-          shareToken: 'eyJSZXF1ZXN0SWQiOiI3QjIyRThDNy1DMzVDLTU0MDItODhBQi0yREM4NTdEMEJDNDUiLCJXb3JrZmxvd1R5cGUiOiJWaXNpb25DaGF0IiwiVGVtcG9yYXJ5QUlBZ2VudElkIjoiNDg5MjBmOGY4MmFjNDNjNjk0M2I5MWJlZWJhNjFiZDQiLCJFeHBpcmVUaW1lIjoiMjAyNS0wMy0yMSAwNzo0ODowNSIsIk5hbWUiOiI0ODkyMGY4ZjgyYWM0M2M2OTQzYjkxYmVlYmE2MWJkNCIsIlJlZ2lvbiI6ImNuLWhhbmd6aG91In0=',                     // 从控制台上拷贝的Token
+          shareToken: 'eyJSZXF1ZXN0SWQiOiJERTI1Njk2RS1CQTk5LTMyQUItQTQ1MC0zNzA4MjFERURFNDUiLCJXb3JrZmxvd1R5cGUiOiJWb2ljZUNoYXQiLCJUZW1wb3JhcnlBSUFnZW50SWQiOiIzM2I2ZTIzMTExZmY0YTdiOGJkYjU4ZTViNTcwYzZhMSIsIkV4cGlyZVRpbWUiOiIyMDI1LTAzLTIzIDE2OjEzOjAxIiwiTmFtZSI6IjMzYjZlMjMxMTFmZjRhN2I4YmRiNThlNWI1NzBjNmExIiwiUmVnaW9uIjoiYXAtc291dGhlYXN0LTEifQ==', // Keep original token
         }).render();
       }
     };
