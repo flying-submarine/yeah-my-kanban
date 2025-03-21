@@ -25,6 +25,11 @@ export const LoginForm = (props: LoginFormProps) => {
 
     const handleLogin = async () => {
         const { current } = passcodeInputRef;
+        const userObj: { [key: string]: number } = {
+            user1:1,
+            user2:2,
+            user3:3,
+        };
         if (current) {
             const { value } = current;
             if (!value.length) {
@@ -49,6 +54,8 @@ export const LoginForm = (props: LoginFormProps) => {
                         fingerprint
                     );
                     setLocalStorage("passcode", encodedPasscode, remember);
+                    setLocalStorage("userIndex", userObj[value], remember);
+
                 }
                 sendUserAlert(
                     t("components.LoginForm.handleLogin.login_success"),false,500
@@ -90,6 +97,7 @@ export const LoginForm = (props: LoginFormProps) => {
                 onPasscodeCorrect();
             } else {
                 setLocalStorage("passcode", "", false);
+                setLocalStorage("userIndex", "", false);
             }
         });
     }, [t,checkHasLoggedIn, onPasscodeCorrect]);

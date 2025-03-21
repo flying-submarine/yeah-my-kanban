@@ -1,6 +1,7 @@
 import { BaseParams, GenerativeModel, Part } from "@google/generative-ai";
 import { SessionHistory } from "../store/sessions";
 import { asyncSleep } from "./asyncSleep";
+import getLocalStorage from "./getLocalStorage";
 
 
 interface DataContent {
@@ -29,11 +30,15 @@ export const getAiChats = async (
                 !!attachment?.data.length ? index : -1
             )
             .filter((item) => item !== -1);
-
+        const userId = getLocalStorage(
+            "userIndex",
+            "",
+            false
+        ).replaceAll('"', "");
         if (type === "personalInfoQuery") {
             let preUrl = "/dda/chat/multi/api/stream"
            
-            const url = `${preUrl}?content=${prompts}&userId=${'777'}&sessionId=${chartId}`;
+            const url = `${preUrl}?content=${prompts}&userId=${userId}&sessionId=${chartId}`;
             const eventSource = new EventSource(url);
 
             eventSource.onmessage = function(event) {
@@ -57,7 +62,7 @@ export const getAiChats = async (
         else {
             let  preUrl = "/dda/chat/bi/api/stream"
 
-            const url = `${preUrl}?content=${prompts}&userId=${'777'}&sessionId=${chartId}`;
+            const url = `${preUrl}?content=${prompts}&userId=${userId}&sessionId=${chartId}`;
             const eventSource = new EventSource(url);
 
             eventSource.onmessage = function(event) {

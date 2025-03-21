@@ -1,5 +1,6 @@
 import { GenerativeContentBlob, GenerativeModel } from "@google/generative-ai";
 import { asyncSleep } from "./asyncSleep";
+import getLocalStorage from "./getLocalStorage";
 
 interface DataContent {
     optimize?: string;
@@ -23,10 +24,15 @@ export const getAiContent = async (
 ) => {
     
     const TypeWriterEffectThreshold = 30;
+    const userId = getLocalStorage(
+        "userIndex",
+        "",
+        false
+    ).replaceAll('"', "");
     try {
         let preUrl = "/dda/chat/multi/api/stream"
           
-            const url = `${preUrl}?content=${prompts}&fileId=${fileId}&userId=${'123'}&sessionId=${chartId}`;
+            const url = `${preUrl}?content=${prompts}&fileId=${fileId}&userId=${userId}&sessionId=${chartId}`;
             const eventSource = new EventSource(url);
 
             eventSource.onmessage = function(event) {
