@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Markdown } from "../components/Markdown";
 import { Session, SessionEditState, SessionRole } from "../components/Session";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState,useRef } from "react";
 import { SessionHistory, Sessions } from "../store/sessions";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxStoreProps } from "../config/store";
@@ -25,11 +25,9 @@ const Chat = (props: RouterComponentProps) => {
     const { t } = useTranslation();
     const viewAttachment = t("views.Chat.view_attachment");
     const refreshPlaceholder = t("views.Chat.refresh_placeholder");
-    const invalidPlaceholder = t("views.Chat.invalid_placeholder");
 
     const mainSectionRef = props.refs?.mainSectionRef.current ?? null;
-    const { site: siteTitle } = globalConfig.title;
-    const { mode, basename } = routerConfig;
+    const isUserScrolling = useRef(false);
 
     const dispatch = useDispatch();
     const sessions = useSelector(
@@ -178,9 +176,32 @@ const Chat = (props: RouterComponentProps) => {
         }
     };
 
+    const handleScroll = () => {
+        if (!mainSectionRef) return;
+        // 只要用户手动滚动，标记为 true
+        const isAtBottom =
+            mainSectionRef.scrollHeight - mainSectionRef.scrollTop <=
+            mainSectionRef.clientHeight + 50;
+        isUserScrolling.current = !isAtBottom;
+    };
+
     useEffect(() => {
-        setTimeout(() => scrollToBottom(true), 300);
-    }, [t,sessions, mainSectionRef, scrollToBottom]);
+        if (mainSectionRef) {
+            mainSectionRef.addEventListener("scroll", handleScroll);
+        }
+        return () => {
+            if (mainSectionRef) {
+                mainSectionRef.removeEventListener("scroll", handleScroll);
+            }
+        };
+    }, [mainSectionRef]);
+
+    useEffect(() => {
+        // 如果用户未手动滚动过，才自动滚动到底部
+        if (!isUserScrolling.current) {
+            setTimeout(() => scrollToBottom(true), 300);
+        }
+    }, [sessions]);
 
     return (
         <Container className="max-w-[calc(100%)] py-5 pl-3 mb-auto mx-1 md:mx-[4rem] lg:mx-[8rem]">

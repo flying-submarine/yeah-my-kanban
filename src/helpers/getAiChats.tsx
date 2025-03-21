@@ -69,7 +69,6 @@ export const getAiChats = async (
                     summer:"",
                     echarts:""
                 }}:Data = data
-                console.log(data, "data");
                 let param:DataContent = {...content}
                 const text = content.summer || ""
                 if(status === "init"){
