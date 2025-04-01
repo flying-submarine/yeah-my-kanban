@@ -2,7 +2,7 @@ import { LazyExoticComponent, RefObject, lazy } from "react";
 import { RouterMode } from "../components/RouterWrapper";
 
 const Home = lazy(() => import("../views/Home"));
-const Video = lazy(() => import("../views/Video"));
+const Video = lazy(() => import("../views/VoiceIframe"));
 const Chat = lazy(() => import("../views/Chat"));
 const Chart = lazy(() => import("../views/Chart"));
 
@@ -34,6 +34,7 @@ export const routerConfig: RouterConfig = {
     mode: "hash",
     routes: {
         index: { prefix: "/", uri: "", suffix: "", element: Home },
+        gov: { prefix: "/govFineQuery", uri: "", suffix: "", element: Home },
         chat: { prefix: "/personalInfoQuery", uri: "/:id", suffix: "", element: Chat },
         video: { prefix: "/voiceAssistant", uri: "", suffix: "", element: Video },
         chart: { prefix: "/govFineQuery", uri: "/:id", suffix: "", element: Chart },

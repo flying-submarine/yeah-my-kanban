@@ -42,7 +42,8 @@
     },
     "views": {
         "Home": {
-            "landing_title": "How can I help you today?"
+            "landing_title": "I'm DubaiNow Assistant."
+
         },
         "Chat": {
             "view_attachment": "Click to view attachment",

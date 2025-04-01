@@ -19,3 +19,18 @@ body::-webkit-scrollbar {
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
 }
+
+.connecting > ._tip{
+    display: none;
+}
+
+._call > ._label {
+    display: none;
+}
+
+.tip > ._text {
+    display: none;
+}
+._microphone > ._label {
+    display: none;
+}

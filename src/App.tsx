@@ -363,7 +363,7 @@ const App = () => {
                             onSubmit={handleSubmit}
                             onUpload={handleUpload}
                         />}
-                        {!ai.busy && (
+                        {/* {!ai.busy && (
                             <PageScroller
                                 thresholds={{
                                     top: 200,
@@ -372,7 +372,7 @@ const App = () => {
                                 }}
                                 monitorRef={mainSectionRef}
                             />
-                        )}
+                        )} */}
                     </Container>
                 </>
             ) : (

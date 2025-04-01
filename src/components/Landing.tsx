@@ -20,10 +20,10 @@ export const Landing = (props: LandingProps) => {
                 <img src={wandIcon} alt="" />
             </div>
 
-            <h1 className="font-bold text-lg md:text-xl lg:text-2xl text-gray-900">
-                {title}
+            <h1 className="font-bold text-lg md:text-xl lg:text-xl text-gray-900">
+                <p>{title}</p>
+                <p className="font-normal ml-2 text-sm md:text-base lg:text-base">How may I assist you today?</p>
             </h1>
-
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2 pr-2">
                 {samples.map(({ title, description, prompt }, index) => (
                     <button
@@ -32,7 +32,7 @@ export const Landing = (props: LandingProps) => {
                         onClick={() => onSelectSample(prompt)}
                     >
                         <div className="font-semibold md:text-md text-sm text-gray-800/80">
-                            {title}
+                            {description}
                         </div>
                         <div className="text-gray-800/40 md:text-md text-xs">
                             {description}

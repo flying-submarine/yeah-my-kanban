@@ -170,7 +170,7 @@ export const InputArea = forwardRef(
                         }}
                     />
 
-                    {!isChart ? <button
+                    {/* {!isChart ? <button
                         className="bg-gray-100 hover:bg-gray-200 rounded-lg p-3"
                         onClick={({ currentTarget }) => {
                             if (!!attachmentName.length) {
@@ -196,7 +196,7 @@ export const InputArea = forwardRef(
                             src={attachmentIcon}
                             alt=""
                         />
-                    </button> : null}
+                    </button> : null} */}
                     <div className="relative w-full items-center justify-center flex">
                         <div className="absolute left-0 flex items-center pl-2">
                             <button
