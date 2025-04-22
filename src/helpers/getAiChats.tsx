@@ -116,7 +116,7 @@ export const getAiChats = async (
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId,
+          userId:"wl",
           message: typeof prompts === "string" ? prompts : JSON.stringify(prompts),
         }),
       });
